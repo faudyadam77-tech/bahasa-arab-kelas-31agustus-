@@ -5,348 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pembelajaran Bahasa Arab - Ruang Keluarga</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
-        .content {
-            padding: 30px;
-        }
-
-        .section {
-            margin-bottom: 30px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 15px;
-            border-left: 5px solid #667eea;
-        }
-
-        .section h2 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.5em;
-        }
-
-        .section h3 {
-            color: #764ba2;
-            margin: 15px 0 10px 0;
-            font-size: 1.2em;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background: #667eea;
-            color: white;
-            font-weight: bold;
-        }
-
-        tr:hover {
-            background: #f5f5f5;
-        }
-
-        .arabic {
-            font-family: 'Traditional Arabic', 'Arial', sans-serif;
-            font-size: 1.3em;
-            direction: rtl;
-            text-align: right;
-        }
-
-        .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: bold;
-            transition: all 0.3s;
-            margin: 5px;
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
-        }
-
-        .btn-success:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(17, 153, 142, 0.4);
-        }
-
-        .btn-warning {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-        }
-
-        .btn-warning:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(240, 147, 251, 0.4);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 1em;
-            transition: border 0.3s;
-            font-family: inherit;
-        }
-
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .question {
-            background: white;
-            padding: 20px;
-            margin: 15px 0;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .question h4 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.1em;
-        }
-
-        .options {
-            margin: 10px 0;
-        }
-
-        .option {
-            display: block;
-            padding: 12px;
-            margin: 8px 0;
-            background: #f8f9fa;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .option:hover {
-            background: #e9ecef;
-        }
-
-        .option input {
-            margin-right: 10px;
-        }
-
-        .result {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .result h2 {
-            font-size: 2em;
-            margin-bottom: 15px;
-        }
-
-        .result p {
-            font-size: 1.2em;
-            margin: 10px 0;
-        }
-
-        /* PERBAIKAN: Class hidden dengan !important */
-        .hidden {
-            display: none !important;
-        }
-
-        .nav-buttons {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .student-info {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        .student-info strong {
-            color: #1976d2;
-        }
-
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        .loading-box {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            max-width: 400px;
-        }
-
-        .spinner {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #667eea;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            font-weight: bold;
-            margin: 5px;
-        }
-
-        .status-success {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status-error {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .answer-review {
-            text-align: left;
-            margin-top: 30px;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            color: #333;
-        }
-
-        .answer-item {
-            margin: 10px 0;
-            padding: 12px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-        }
-
-        .answer-item.correct {
-            border-left-color: #28a745;
-            background: #d4edda;
-        }
-
-        .answer-item.wrong {
-            border-left-color: #dc3545;
-            background: #f8d7da;
-        }
-
-        .essay-notice {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            color: #856404;
-            text-align: center;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 { font-size: 1.5em; }
-            .content { padding: 15px; }
-            table { font-size: 0.9em; }
-            th, td { padding: 8px; }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 30px; text-align: center; }
+        .header h1 { font-size: 2em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.9; }
+        .content { padding: 30px; }
+        .section { margin-bottom: 30px; padding: 20px; background: #f8f9fa; border-radius: 15px; border-left: 5px solid #667eea; }
+        .section h2 { color: #667eea; margin-bottom: 15px; font-size: 1.5em; }
+        .section h3 { color: #764ba2; margin: 15px 0 10px 0; font-size: 1.2em; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #667eea; color: white; font-weight: bold; }
+        tr:hover { background: #f5f5f5; }
+        .arabic { font-family: 'Traditional Arabic', 'Arial', sans-serif; font-size: 1.3em; direction: rtl; text-align: right; }
+        .btn { padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: bold; transition: all 0.3s; margin: 5px; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .btn-success { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
+        .btn-success:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(17, 153, 142, 0.4); }
+        .btn-warning { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
+        .btn-warning:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(240, 147, 251, 0.4); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #333; }
+        .form-group input, .form-group textarea { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 10px; font-size: 1em; transition: border 0.3s; font-family: inherit; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #667eea; }
+        .question { background: white; padding: 20px; margin: 15px 0; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .question h4 { color: #667eea; margin-bottom: 15px; font-size: 1.1em; }
+        .options { margin: 10px 0; }
+        .option { display: block; padding: 12px; margin: 8px 0; background: #f8f9fa; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
+        .option:hover { background: #e9ecef; }
+        .option input { margin-right: 10px; }
+        .result { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 30px; border-radius: 15px; text-align: center; margin: 20px 0; }
+        .result h2 { font-size: 2em; margin-bottom: 15px; }
+        .result p { font-size: 1.2em; margin: 10px 0; }
+        .nav-buttons { text-align: center; margin: 20px 0; }
+        .student-info { background: #e3f2fd; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .student-info strong { color: #1976d2; }
+        .status-badge { display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 0.9em; font-weight: bold; margin: 5px; }
+        .status-success { background: #d4edda; color: #155724; }
+        .status-error { background: #f8d7da; color: #721c24; }
+        .answer-review { text-align: left; margin-top: 30px; background: white; padding: 20px; border-radius: 10px; color: #333; }
+        .answer-item { margin: 10px 0; padding: 12px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #667eea; }
+        .answer-item.correct { border-left-color: #28a745; background: #d4edda; }
+        .answer-item.wrong { border-left-color: #dc3545; background: #f8d7da; }
+        .essay-notice { background: #fff3cd; border: 2px solid #ffc107; padding: 15px; border-radius: 10px; margin: 20px 0; color: #856404; text-align: center; }
+        @media (max-width: 768px) { .header h1 { font-size: 1.5em; } .content { padding: 15px; } table { font-size: 0.9em; } th, td { padding: 8px; } }
     </style>
 </head>
 <body>
@@ -358,7 +64,7 @@
         </div>
 
         <div class="content">
-            <!-- Menu Utama - HANYA INI YANG TERLIHAT SAAT PERTAMA KALI -->
+            <!-- MENU UTAMA -->
             <div id="mainMenu">
                 <div class="section">
                     <h2>🎯 Selamat Datang!</h2>
@@ -367,39 +73,37 @@
                         Silakan pilih menu di bawah ini:
                     </p>
                     <div class="nav-buttons">
-                        <button class="btn btn-primary" onclick="showSection('materi')">📖 Lihat Materi</button>
-                        <button class="btn btn-success" onclick="showSection('login')">✏️ Mulai Latihan</button>
+                        <button class="btn btn-primary" onclick="tampilkanMateri()">📖 Lihat Materi</button>
+                        <button class="btn btn-success" onclick="tampilkanLogin()">✏️ Mulai Latihan</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Form Login - HIDDEN -->
-            <div id="loginSection" class="hidden" style="display: none;">
+            <!-- FORM LOGIN -->
+            <div id="loginSection" style="display:none;">
                 <div class="section">
                     <h2>📝 Data Siswa</h2>
                     <div class="form-group">
                         <label for="studentName">Nama Lengkap: *</label>
-                        <input type="text" id="studentName" placeholder="Masukkan nama lengkap Anda" required>
+                        <input type="text" id="studentName" placeholder="Masukkan nama lengkap Anda">
                     </div>
                     <div class="form-group">
                         <label for="studentClass">Kelas: *</label>
-                        <input type="text" id="studentClass" placeholder="Contoh: 6A" value="6" required>
+                        <input type="text" id="studentClass" placeholder="Contoh: 6A" value="6">
                     </div>
                     <div class="nav-buttons">
-                        <button class="btn btn-primary" onclick="startQuiz()"> Mulai Mengerjakan</button>
-                        <button class="btn btn-warning" onclick="showSection('menu')">← Kembali</button>
+                        <button class="btn btn-primary" onclick="mulaiKuis()">🚀 Mulai Mengerjakan</button>
+                        <button class="btn btn-warning" onclick="tampilkanMenu()">← Kembali</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Materi - HIDDEN -->
-            <div id="materiSection" class="hidden" style="display: none;">
+            <!-- MATERI -->
+            <div id="materiSection" style="display:none;">
                 <div class="section">
                     <h2>📖 KOSAKATA (مُفْرَدَاتٌ)</h2>
                     <table>
-                        <thead>
-                            <tr><th>No</th><th>Bahasa Arab</th><th>Cara Baca</th><th>Arti</th></tr>
-                        </thead>
+                        <thead><tr><th>No</th><th>Bahasa Arab</th><th>Cara Baca</th><th>Arti</th></tr></thead>
                         <tbody>
                             <tr><td>1</td><td class="arabic">تِلْفَازٌ</td><td>Tilfāzun</td><td>Televisi</td></tr>
                             <tr><td>2</td><td class="arabic">مَكْتَبٌ</td><td>Maktabun</td><td>Meja Tulis</td></tr>
@@ -422,7 +126,6 @@
                 <div class="section">
                     <h2>📌 ZHARFUL MAKAN (ظَرْفُ الْمَكَانِ)</h2>
                     <p style="margin-bottom: 15px;"><strong>Zharful Makan</strong> adalah keterangan tempat yang menunjukkan posisi atau letak sesuatu.</p>
-                    
                     <h3>🔹 Keterangan Tempat Dasar</h3>
                     <table>
                         <thead><tr><th>Bahasa Arab</th><th>Cara Baca</th><th>Arti</th></tr></thead>
@@ -432,7 +135,6 @@
                             <tr><td class="arabic">جَانِبَ</td><td>Jāniba</td><td>Di Samping</td></tr>
                         </tbody>
                     </table>
-
                     <h3>🔹 Keterangan Tempat Tambahan</h3>
                     <table>
                         <thead><tr><th>Bahasa Arab</th><th>Cara Baca</th><th>Arti</th></tr></thead>
@@ -445,7 +147,7 @@
                 </div>
 
                 <div class="section">
-                    <h2> CONTOH KALIMAT</h2>
+                    <h2>📝 CONTOH KALIMAT</h2>
                     <table>
                         <thead><tr><th>No</th><th>Bahasa Arab</th><th>Arti</th></tr></thead>
                         <tbody>
@@ -466,71 +168,70 @@
                     <h3>1. أَمَامَ (Di Depan)</h3>
                     <p>Digunakan ketika sesuatu berada di <strong>depan</strong> benda/orang lain.</p>
                     <p class="arabic" style="margin-top: 10px;">هَارُونٌ أَمَامَ التِّلْفَازِ</p>
-
                     <h3>2. وَرَاءَ (Di Belakang)</h3>
                     <p>Digunakan ketika sesuatu berada di <strong>belakang</strong> benda/orang lain.</p>
                     <p class="arabic" style="margin-top: 10px;">الْجِدَارُ وَرَاءَ الْأَرِيكَةِ</p>
-
                     <h3>3. جَانِبَ (Di Samping)</h3>
                     <p>Digunakan ketika sesuatu berada di <strong>samping</strong> benda/orang lain.</p>
                     <p class="arabic" style="margin-top: 10px;">الْأَبُ جَانِبَ الْأُمِّ</p>
-
                     <h3>4. بَيْنَ (Di Antara)</h3>
                     <p>Digunakan ketika sesuatu berada di <strong>antara dua</strong> benda/orang. <strong>Penting:</strong> Setelah بَيْنَ harus ada dua objek yang dihubungkan dengan وَ (dan).</p>
                     <p class="arabic" style="margin-top: 10px;">الْأَخُ بَيْنَ الْأَبِ وَالْأُمِّ</p>
-
                     <h3>5. فِي (Di Dalam)</h3>
                     <p>Digunakan ketika sesuatu berada di <strong>dalam</strong> suatu tempat/ruangan.</p>
                     <p class="arabic" style="margin-top: 10px;">الزَّهْرِيَّةُ فِي الْغُرْفَةِ</p>
-
                     <h3>6. عَلَى (Di Atas)</h3>
                     <p>Digunakan ketika sesuatu berada di <strong>atas</strong> permukaan benda lain.</p>
                     <p class="arabic" style="margin-top: 10px;">التِّلْفَازُ عَلَى الْمَكْتَبِ</p>
                 </div>
 
                 <div class="nav-buttons">
-                    <button class="btn btn-success" onclick="showSection('login')">✏️ Mulai Latihan</button>
-                    <button class="btn btn-warning" onclick="showSection('menu')">🏠 Menu Utama</button>
+                    <button class="btn btn-success" onclick="tampilkanLogin()">✏️ Mulai Latihan</button>
+                    <button class="btn btn-warning" onclick="tampilkanMenu()">🏠 Menu Utama</button>
                 </div>
             </div>
 
-            <!-- Quiz Section - HIDDEN -->
-            <div id="quizSection" class="hidden" style="display: none;">
+            <!-- QUIZ -->
+            <div id="quizSection" style="display:none;">
                 <div class="student-info" id="studentInfo"></div>
                 <div id="quizContent"></div>
                 <div class="nav-buttons">
-                    <button class="btn btn-success" id="submitBtn" onclick="submitQuiz()">✅ Kumpulkan Jawaban</button>
+                    <button class="btn btn-success" id="submitBtn" onclick="kumpulkanJawaban()">✅ Kumpulkan Jawaban</button>
                 </div>
             </div>
 
-            <!-- Result Section - HIDDEN -->
-            <div id="resultSection" class="hidden" style="display: none;">
+            <!-- RESULT -->
+            <div id="resultSection" style="display:none;">
                 <div class="result" id="resultContent"></div>
                 <div class="nav-buttons">
-                    <button class="btn btn-primary" onclick="startNewSession()">🔄 Sesi Baru</button>
-                    <button class="btn btn-warning" onclick="showSection('menu')">🏠 Menu Utama</button>
+                    <button class="btn btn-primary" onclick="sesiBaru()">🔄 Sesi Baru</button>
+                    <button class="btn btn-warning" onclick="tampilkanMenu()">🏠 Menu Utama</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Loading Overlay - HIDDEN DENGAN INLINE STYLE -->
-    <div id="loadingOverlay" class="hidden" style="display: none;">
-        <div class="loading-box">
-            <div class="spinner"></div>
+    <!-- LOADING OVERLAY - DISPLAY NONE DI CSS LANGSUNG -->
+    <div id="loadingOverlay" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 40px; border-radius: 15px; text-align: center; max-width: 400px;">
+            <div style="border: 5px solid #f3f3f3; border-top: 5px solid #667eea; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
             <h3>Mengirim Jawaban...</h3>
             <p>Mohon tunggu, data sedang dikirim ke guru.</p>
         </div>
     </div>
 
+    <style>
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+
     <script>
         // ============================================
-        // URL APPS SCRIPT - SUDAH TERPASANG ✅
+        // KONFIGURASI
         // ============================================
         const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyrx7pm8HyqplUFGBVhW3JSb6Qlgj-5K5ImB5p1ExWHWFJ3DKe0RD0SmqyIkaImVXdZbA/exec";
 
         // ============================================
-        // BANK SOAL PILIHAN GANDA (20 SOAL)
+        // BANK SOAL
         // ============================================
         const bankSoalPG = [
             { soal: "Apa arti dari kata تِلْفَازٌ?", options: ["Meja tulis", "Televisi", "Sofa", "Jam"], jawaban: 1 },
@@ -555,9 +256,6 @@
             { soal: "غُرْفَةُ الْعَائِلَةِ artinya...", options: ["Ruang tamu", "Ruang keluarga", "Ruang tidur", "Ruang makan"], jawaban: 1 }
         ];
 
-        // ============================================
-        // BANK SOAL ESSAY (10 SOAL)
-        // ============================================
         const bankSoalEssay = [
             { soal: "Sebutkan 6 ظَرْفُ الْمَكَانِ (keterangan tempat) yang telah dipelajari beserta artinya!", jawaban: "أَمَامَ = Di depan, وَرَاءَ = Di belakang, جَانِبَ = Di samping, بَيْنَ = Di antara, فِي = Di dalam, عَلَى = Di atas" },
             { soal: "Terjemahkan kalimat berikut ke dalam bahasa Indonesia: هَارُونٌ أَمَامَ التِّلْفَازِ", jawaban: "Harun di depan TV" },
@@ -574,10 +272,10 @@
         // ============================================
         // VARIABEL SESI
         // ============================================
-        let currentSession = {
-            name: '',
-            class: '',
-            sessionNumber: 1,
+        let sesiSaatIni = {
+            nama: '',
+            kelas: '',
+            nomorSesi: 1,
             soalPG: [],
             soalEssay: [],
             jawabanPG: [],
@@ -585,62 +283,73 @@
         };
 
         // ============================================
-        // INISIALISASI SAAT HALAMAN DIMUAT
+        // FUNGSI NAVIGASI (DIPANGGIL DARI TOMBOL)
         // ============================================
-        window.addEventListener('DOMContentLoaded', function() {
-            // Pastikan hanya mainMenu yang terlihat
+        function tampilkanMenu() {
+            console.log('➡️ Tampilkan Menu');
+            sembunyikanSemua();
             document.getElementById('mainMenu').style.display = 'block';
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('materiSection').style.display = 'none';
-            document.getElementById('quizSection').style.display = 'none';
-            document.getElementById('resultSection').style.display = 'none';
-            document.getElementById('loadingOverlay').style.display = 'none';
-            
-            console.log('✅ Halaman berhasil dimuat. Menu utama ditampilkan.');
-        });
+            window.scrollTo(0, 0);
+        }
 
-        // ============================================
-        // FUNGSI NAVIGASI
-        // ============================================
-        function showSection(section) {
-            // Sembunyikan SEMUA section dulu
+        function tampilkanLogin() {
+            console.log('➡️ Tampilkan Login');
+            sembunyikanSemua();
+            document.getElementById('loginSection').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function tampilkanMateri() {
+            console.log('➡️ Tampilkan Materi');
+            sembunyikanSemua();
+            document.getElementById('materiSection').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function tampilkanQuiz() {
+            console.log('️ Tampilkan Quiz');
+            sembunyikanSemua();
+            document.getElementById('quizSection').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function tampilkanHasil() {
+            console.log('➡️ Tampilkan Hasil');
+            sembunyikanSemua();
+            document.getElementById('resultSection').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function sembunyikanSemua() {
             document.getElementById('mainMenu').style.display = 'none';
             document.getElementById('loginSection').style.display = 'none';
             document.getElementById('materiSection').style.display = 'none';
             document.getElementById('quizSection').style.display = 'none';
             document.getElementById('resultSection').style.display = 'none';
             document.getElementById('loadingOverlay').style.display = 'none';
-
-            // Tampilkan section yang diminta
-            if (section === 'menu') {
-                document.getElementById('mainMenu').style.display = 'block';
-            } else if (section === 'login') {
-                document.getElementById('loginSection').style.display = 'block';
-            } else if (section === 'materi') {
-                document.getElementById('materiSection').style.display = 'block';
-            }
-            
-            window.scrollTo(0, 0);
         }
 
-        function shuffleArray(array) {
-            const newArray = [...array];
-            for (let i = newArray.length - 1; i > 0; i--) {
+        // ============================================
+        // FUNGSI UTILITAS
+        // ============================================
+        function acakArray(array) {
+            const baru = [...array];
+            for (let i = baru.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+                [baru[i], baru[j]] = [baru[j], baru[i]];
             }
-            return newArray;
+            return baru;
         }
 
         // ============================================
         // MULAI KUIS
         // ============================================
-        function startQuiz() {
-            const name = document.getElementById('studentName').value.trim();
+        function mulaiKuis() {
+            const nama = document.getElementById('studentName').value.trim();
             const kelas = document.getElementById('studentClass').value.trim();
 
-            if (!name) {
-                alert('⚠️ Silakan masukkan nama lengkap Anda!');
+            if (!nama) {
+                alert('️ Silakan masukkan nama lengkap Anda!');
                 return;
             }
             if (!kelas) {
@@ -648,96 +357,64 @@
                 return;
             }
 
-            currentSession.name = name;
-            currentSession.class = kelas;
+            sesiSaatIni.nama = nama;
+            sesiSaatIni.kelas = kelas;
 
-            const shuffledPG = shuffleArray(bankSoalPG);
-            currentSession.soalPG = shuffledPG.slice(0, 7);
+            const pgAcak = acakArray(bankSoalPG);
+            sesiSaatIni.soalPG = pgAcak.slice(0, 7);
 
-            const shuffledEssay = shuffleArray(bankSoalEssay);
-            currentSession.soalEssay = shuffledEssay.slice(0, 3);
+            const essayAcak = acakArray(bankSoalEssay);
+            sesiSaatIni.soalEssay = essayAcak.slice(0, 3);
 
-            currentSession.jawabanPG = new Array(7).fill(null);
-            currentSession.jawabanEssay = new Array(3).fill('');
+            sesiSaatIni.jawabanPG = new Array(7).fill(null);
+            sesiSaatIni.jawabanEssay = new Array(3).fill('');
 
-            document.getElementById('studentInfo').innerHTML = `
-                <strong>👤 Nama:</strong> ${currentSession.name} | 
-                <strong> Kelas:</strong> ${currentSession.class} |
-                <strong>📝 Sesi ke:</strong> ${currentSession.sessionNumber}
-            `;
+            document.getElementById('studentInfo').innerHTML = 
+                '<strong>👤 Nama:</strong> ' + sesiSaatIni.nama + ' | ' +
+                '<strong>🏫 Kelas:</strong> ' + sesiSaatIni.kelas + ' | ' +
+                '<strong>📝 Sesi ke:</strong> ' + sesiSaatIni.nomorSesi;
 
-            renderQuiz();
-            showSection('quiz');
+            renderKuis();
+            tampilkanQuiz();
         }
 
-        function renderQuiz() {
+        function renderKuis() {
             let html = '<h2 style="color: #667eea; margin-bottom: 20px;">📝 Soal Latihan</h2>';
 
             html += '<div class="section"><h3>A. Pilihan Ganda (7 Soal)</h3><p style="margin-bottom:15px;color:#666;">Pilihlah satu jawaban yang paling benar!</p>';
-            currentSession.soalPG.forEach((soal, index) => {
-                html += `
-                    <div class="question">
-                        <h4>${index + 1}. ${soal.soal}</h4>
-                        <div class="options">
-                            ${soal.options.map((option, optIndex) => `
-                                <label class="option">
-                                    <input type="radio" name="pg${index}" value="${optIndex}" 
-                                        onchange="currentSession.jawabanPG[${index}] = ${optIndex}">
-                                    ${String.fromCharCode(65 + optIndex)}. ${option}
-                                </label>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
+            sesiSaatIni.soalPG.forEach(function(soal, idx) {
+                html += '<div class="question"><h4>' + (idx + 1) + '. ' + soal.soal + '</h4><div class="options">';
+                soal.options.forEach(function(opt, optIdx) {
+                    const huruf = String.fromCharCode(65 + optIdx);
+                    html += '<label class="option"><input type="radio" name="pg' + idx + '" value="' + optIdx + '" onchange="pilihPG(' + idx + ', ' + optIdx + ')"> ' + huruf + '. ' + opt + '</label>';
+                });
+                html += '</div></div>';
             });
             html += '</div>';
 
             html += '<div class="section"><h3>B. Essay (3 Soal)</h3><p style="margin-bottom:15px;color:#666;">Jawablah pertanyaan berikut dengan jelas! (Akan dinilai oleh guru)</p>';
-            currentSession.soalEssay.forEach((soal, index) => {
-                html += `
-                    <div class="question">
-                        <h4>${index + 1}. ${soal.soal}</h4>
-                        <div class="form-group">
-                            <textarea id="essay${index}" rows="4" placeholder="Tulis jawaban Anda di sini..."
-                                oninput="currentSession.jawabanEssay[${index}] = this.value"></textarea>
-                        </div>
-                    </div>
-                `;
+            sesiSaatIni.soalEssay.forEach(function(soal, idx) {
+                html += '<div class="question"><h4>' + (idx + 1) + '. ' + soal.soal + '</h4><div class="form-group">';
+                html += '<textarea rows="4" placeholder="Tulis jawaban Anda di sini..." oninput="tulisEssay(' + idx + ', this.value)"></textarea>';
+                html += '</div></div>';
             });
             html += '</div>';
 
             document.getElementById('quizContent').innerHTML = html;
         }
 
-        // Tambahkan section quiz ke fungsi showSection
-        const originalShowSection = showSection;
-        showSection = function(section) {
-            document.getElementById('mainMenu').style.display = 'none';
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('materiSection').style.display = 'none';
-            document.getElementById('quizSection').style.display = 'none';
-            document.getElementById('resultSection').style.display = 'none';
-            document.getElementById('loadingOverlay').style.display = 'none';
+        function pilihPG(idx, nilai) {
+            sesiSaatIni.jawabanPG[idx] = nilai;
+        }
 
-            if (section === 'menu') {
-                document.getElementById('mainMenu').style.display = 'block';
-            } else if (section === 'login') {
-                document.getElementById('loginSection').style.display = 'block';
-            } else if (section === 'materi') {
-                document.getElementById('materiSection').style.display = 'block';
-            } else if (section === 'quiz') {
-                document.getElementById('quizSection').style.display = 'block';
-            } else if (section === 'result') {
-                document.getElementById('resultSection').style.display = 'block';
-            }
-            
-            window.scrollTo(0, 0);
-        };
+        function tulisEssay(idx, nilai) {
+            sesiSaatIni.jawabanEssay[idx] = nilai;
+        }
 
         // ============================================
-        // KIRIM DATA KE GOOGLE SPREADSHEET
+        // KIRIM DATA
         // ============================================
-        async function sendDataToSpreadsheet(data) {
+        async function kirimData(data) {
             try {
                 await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
@@ -747,25 +424,25 @@
                 });
                 return { status: 'success', message: 'Data berhasil dikirim!' };
             } catch (error) {
-                console.error('Error sending data:', error);
+                console.error('Error:', error);
                 return { status: 'error', message: error.message };
             }
         }
 
         // ============================================
-        // SUBMIT KUIS
+        // KUMPULKAN JAWABAN
         // ============================================
-        async function submitQuiz() {
-            const unansweredPG = currentSession.jawabanPG.filter(j => j === null).length;
-            if (unansweredPG > 0) {
-                if (!confirm(`⚠️ Masih ada ${unansweredPG} soal pilihan ganda yang belum dijawab. Yakin ingin mengumpulkan?`)) {
+        async function kumpulkanJawaban() {
+            const belumJawabPG = sesiSaatIni.jawabanPG.filter(function(j) { return j === null; }).length;
+            if (belumJawabPG > 0) {
+                if (!confirm('⚠️ Masih ada ' + belumJawabPG + ' soal pilihan ganda yang belum dijawab. Yakin ingin mengumpulkan?')) {
                     return;
                 }
             }
 
-            const unansweredEssay = currentSession.jawabanEssay.filter(j => j.trim() === '').length;
-            if (unansweredEssay > 0) {
-                if (!confirm(`⚠️ Masih ada ${unansweredEssay} soal essay yang belum dijawab. Yakin ingin mengumpulkan?`)) {
+            const belumJawabEssay = sesiSaatIni.jawabanEssay.filter(function(j) { return j.trim() === ''; }).length;
+            if (belumJawabEssay > 0) {
+                if (!confirm('⚠️ Masih ada ' + belumJawabEssay + ' soal essay yang belum dijawab. Yakin ingin mengumpulkan?')) {
                     return;
                 }
             }
@@ -774,95 +451,101 @@
                 return;
             }
 
-            let skorPG = 0;
-            currentSession.soalPG.forEach((soal, index) => {
-                if (currentSession.jawabanPG[index] === soal.jawaban) {
-                    skorPG++;
+            let skor = 0;
+            sesiSaatIni.soalPG.forEach(function(soal, idx) {
+                if (sesiSaatIni.jawabanPG[idx] === soal.jawaban) {
+                    skor++;
                 }
             });
 
-            const skorPGFinal = (skorPG / 7) * 70;
-            const jawabanPGFormatted = currentSession.jawabanPG.map(j => 
-                j !== null ? String.fromCharCode(65 + j) : '-'
-            );
+            const nilaiAkhir = (skor / 7) * 70;
+            const jawabanFormatted = sesiSaatIni.jawabanPG.map(function(j) {
+                return j !== null ? String.fromCharCode(65 + j) : '-';
+            });
 
-            const dataToSend = {
-                nama: currentSession.name,
-                kelas: currentSession.class,
-                sesi: currentSession.sessionNumber,
-                nilaiPG: skorPGFinal.toFixed(1),
-                benarPG: `${skorPG}/7`,
-                jawabanPG: jawabanPGFormatted,
-                jawabanEssay: currentSession.jawabanEssay.map(j => j.trim() || '-')
+            const dataKirim = {
+                nama: sesiSaatIni.nama,
+                kelas: sesiSaatIni.kelas,
+                sesi: sesiSaatIni.nomorSesi,
+                nilaiPG: nilaiAkhir.toFixed(1),
+                benarPG: skor + '/7',
+                jawabanPG: jawabanFormatted,
+                jawabanEssay: sesiSaatIni.jawabanEssay.map(function(j) { return j.trim() || '-'; })
             };
 
-            // Tampilkan loading - SEKARANG DI SINI SAJA
+            // TAMPILKAN LOADING - HANYA DI SINI!
             document.getElementById('loadingOverlay').style.display = 'flex';
             document.getElementById('submitBtn').disabled = true;
 
-            const result = await sendDataToSpreadsheet(dataToSend);
+            const hasil = await kirimData(dataKirim);
 
-            // Sembunyikan loading
+            // SEMBUNYIKAN LOADING
             document.getElementById('loadingOverlay').style.display = 'none';
             document.getElementById('submitBtn').disabled = false;
 
-            let resultHTML = `
-                <h2>🎉 Hasil Latihan</h2>
-                <p><strong>👤 Nama:</strong> ${currentSession.name}</p>
-                <p><strong>🏫 Kelas:</strong> ${currentSession.class}</p>
-                <p><strong>📝 Sesi ke:</strong> ${currentSession.sessionNumber}</p>
-                <hr style="margin: 20px 0; border-color: rgba(255,255,255,0.3);">
-                <p style="font-size: 1.5em;"><strong>📊 Nilai Pilihan Ganda: ${skorPGFinal.toFixed(1)} / 70</strong></p>
-                <p><strong>✅ Benar:</strong> ${skorPG} dari 7 soal</p>
-                <hr style="margin: 20px 0; border-color: rgba(255,255,255,0.3);">
-            `;
+            // TAMPILKAN HASIL
+            let html = '<h2> Hasil Latihan</h2>';
+            html += '<p><strong>👤 Nama:</strong> ' + sesiSaatIni.nama + '</p>';
+            html += '<p><strong>🏫 Kelas:</strong> ' + sesiSaatIni.kelas + '</p>';
+            html += '<p><strong>📝 Sesi ke:</strong> ' + sesiSaatIni.nomorSesi + '</p>';
+            html += '<hr style="margin: 20px 0; border-color: rgba(255,255,255,0.3);">';
+            html += '<p style="font-size: 1.5em;"><strong>📊 Nilai Pilihan Ganda: ' + nilaiAkhir.toFixed(1) + ' / 70</strong></p>';
+            html += '<p><strong>✅ Benar:</strong> ' + skor + ' dari 7 soal</p>';
+            html += '<hr style="margin: 20px 0; border-color: rgba(255,255,255,0.3);">';
 
-            if (result.status === 'success') {
-                resultHTML += `<p><span class="status-badge status-success">✅ Data berhasil dikirim ke guru!</span></p>`;
+            if (hasil.status === 'success') {
+                html += '<p><span class="status-badge status-success">✅ Data berhasil dikirim ke guru!</span></p>';
             } else {
-                resultHTML += `<p><span class="status-badge status-error">️ Gagal mengirim data - Screenshot hasil ini!</span></p>`;
+                html += '<p><span class="status-badge status-error">⚠️ Gagal mengirim data - Screenshot hasil ini!</span></p>';
             }
 
-            resultHTML += `
-                <div class="essay-notice">
-                    <strong>📝 Catatan:</strong> Jawaban essay Anda sudah dikirim ke guru dan akan dinilai secara manual. 
-                    Nilai akhir akan diumumkan oleh guru.
-                </div>
-            `;
+            html += '<div class="essay-notice"><strong>📝 Catatan:</strong> Jawaban essay Anda sudah dikirim ke guru dan akan dinilai secara manual. Nilai akhir akan diumumkan oleh guru.</div>';
 
-            resultHTML += '<div class="answer-review">';
-            resultHTML += '<h3 style="color: #667eea; margin-bottom: 15px;">📋 Review Jawaban Pilihan Ganda:</h3>';
-            
-            currentSession.soalPG.forEach((soal, index) => {
-                const isCorrect = currentSession.jawabanPG[index] === soal.jawaban;
-                const status = isCorrect ? '✅' : '❌';
-                const studentAnswer = currentSession.jawabanPG[index] !== null 
-                    ? String.fromCharCode(65 + currentSession.jawabanPG[index]) 
-                    : '-';
-                const correctAnswer = String.fromCharCode(65 + soal.jawaban);
-                
-                resultHTML += `
-                    <div class="answer-item ${isCorrect ? 'correct' : 'wrong'}">
-                        <strong>${index + 1}.</strong> ${status} 
-                        Jawaban Anda: <strong>${studentAnswer}</strong> | 
-                        Kunci: <strong>${correctAnswer}. ${soal.options[soal.jawaban]}</strong>
-                    </div>
-                `;
+            html += '<div class="answer-review">';
+            html += '<h3 style="color: #667eea; margin-bottom: 15px;">📋 Review Jawaban Pilihan Ganda:</h3>';
+
+            sesiSaatIni.soalPG.forEach(function(soal, idx) {
+                const benar = sesiSaatIni.jawabanPG[idx] === soal.jawaban;
+                const status = benar ? '✅' : '';
+                const jawabanSiswa = sesiSaatIni.jawabanPG[idx] !== null ? String.fromCharCode(65 + sesiSaatIni.jawabanPG[idx]) : '-';
+                const kunci = String.fromCharCode(65 + soal.jawaban);
+                const kelasItem = benar ? 'answer-item correct' : 'answer-item wrong';
+
+                html += '<div class="' + kelasItem + '">';
+                html += '<strong>' + (idx + 1) + '.</strong> ' + status + ' ';
+                html += 'Jawaban Anda: <strong>' + jawabanSiswa + '</strong> | ';
+                html += 'Kunci: <strong>' + kunci + '. ' + soal.options[soal.jawaban] + '</strong>';
+                html += '</div>';
             });
-            
-            resultHTML += '</div>';
 
-            document.getElementById('resultContent').innerHTML = resultHTML;
-            showSection('result');
+            html += '</div>';
 
-            currentSession.sessionNumber++;
+            document.getElementById('resultContent').innerHTML = html;
+            tampilkanHasil();
+
+            sesiSaatIni.nomorSesi++;
         }
 
-        function startNewSession() {
-            document.getElementById('studentName').value = currentSession.name;
-            document.getElementById('studentClass').value = currentSession.class;
-            showSection('login');
+        function sesiBaru() {
+            document.getElementById('studentName').value = sesiSaatIni.nama;
+            document.getElementById('studentClass').value = sesiSaatIni.kelas;
+            tampilkanLogin();
         }
+
+        // ============================================
+        // INISIALISASI SAAT HALAMAN DIMUAT
+        // ============================================
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ Halaman dimuat. Inisialisasi...');
+            // Pastikan hanya menu yang terlihat
+            document.getElementById('mainMenu').style.display = 'block';
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('materiSection').style.display = 'none';
+            document.getElementById('quizSection').style.display = 'none';
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('loadingOverlay').style.display = 'none';
+            console.log('✅ Inisialisasi selesai. Menu utama ditampilkan.');
+        });
     </script>
 </body>
 </html>
