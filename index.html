@@ -1,510 +1,272 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pembelajaran Bahasa Arab - Ruang Keluarga</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
-        .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
-        .header { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 30px; text-align: center; }
-        .header h1 { font-size: 2em; margin-bottom: 10px; }
-        .header p { font-size: 1.1em; opacity: 0.9; }
-        .content { padding: 30px; }
-        .section { margin-bottom: 30px; padding: 20px; background: #f8f9fa; border-radius: 15px; border-left: 5px solid #667eea; }
-        .section h2 { color: #667eea; margin-bottom: 15px; font-size: 1.5em; }
-        .section h3 { color: #764ba2; margin: 15px 0 10px 0; font-size: 1.2em; }
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background: #667eea; color: white; font-weight: bold; }
-        tr:hover { background: #f5f5f5; }
-        .arabic { font-family: 'Traditional Arabic', 'Arial', sans-serif; font-size: 1.3em; direction: rtl; text-align: right; }
-        .btn { padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: bold; transition: all 0.3s; margin: 5px; }
-        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-        .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
-        .btn-success { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; }
-        .btn-success:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(17, 153, 142, 0.4); }
-        .btn-warning { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
-        .btn-warning:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(240, 147, 251, 0.4); }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #333; }
-        .form-group input, .form-group textarea { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 10px; font-size: 1em; transition: border 0.3s; font-family: inherit; }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #667eea; }
-        .question { background: white; padding: 20px; margin: 15px 0; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .question h4 { color: #667eea; margin-bottom: 15px; font-size: 1.1em; }
-        .options { margin: 10px 0; }
-        .option { display: block; padding: 12px; margin: 8px 0; background: #f8f9fa; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
-        .option:hover { background: #e9ecef; }
-        .option input { margin-right: 10px; }
-        .result { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 30px; border-radius: 15px; text-align: center; margin: 20px 0; }
-        .result h2 { font-size: 2em; margin-bottom: 15px; }
-        .result p { font-size: 1.2em; margin: 10px 0; }
-        .nav-buttons { text-align: center; margin: 20px 0; }
-        .student-info { background: #e3f2fd; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
-        .student-info strong { color: #1976d2; }
-        .status-badge { display: inline-block; padding: 8px 20px; border-radius: 20px; font-size: 1em; font-weight: bold; margin: 10px 5px; }
-        .status-success { background: #d4edda; color: #155724; border: 2px solid #28a745; }
-        .status-error { background: #f8d7da; color: #721c24; border: 2px solid #dc3545; }
-        .status-pending { background: #fff3cd; color: #856404; border: 2px solid #ffc107; }
-        .answer-review { text-align: left; margin-top: 30px; background: white; padding: 20px; border-radius: 10px; color: #333; }
-        .answer-item { margin: 10px 0; padding: 12px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #667eea; }
-        .answer-item.correct { border-left-color: #28a745; background: #d4edda; }
-        .answer-item.wrong { border-left-color: #dc3545; background: #f8d7da; }
-        .essay-notice { background: #fff3cd; border: 2px solid #ffc107; padding: 15px; border-radius: 10px; margin: 20px 0; color: #856404; text-align: center; }
-        #dynamicLoadingOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 9999; }
-        .loading-box { background: white; padding: 40px; border-radius: 15px; text-align: center; max-width: 400px; }
-        .spinner { border: 5px solid #f3f3f3; border-top: 5px solid #667eea; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 20px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @media (max-width: 768px) { .header h1 { font-size: 1.5em; } .content { padding: 15px; } table { font-size: 0.9em; } th, td { padding: 8px; } }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 Pembelajaran Bahasa Arab</h1>
-            <p>الدرس الأول: فِي غُرْفَةِ الْعَائِلَةِ</p>
-            <p>Di Ruang Keluarga - SD Kelas VI</p>
-        </div>
+<script>
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyrx7pm8HyqplUFGBVhW3JSb6Qlgj-5K5ImB5p1ExWHWFJ3DKe0RD0SmqyIkaImVXdZbA/exec";
 
-        <div class="content">
-            <div id="mainMenu">
-                <div class="section">
-                    <h2>🎯 Selamat Datang!</h2>
-                    <p style="font-size: 1.1em; line-height: 1.6;">
-                        Halo! Selamat belajar bahasa Arab tentang ruang keluarga. 
-                        Silakan pilih menu di bawah ini:
-                    </p>
-                    <div class="nav-buttons">
-                        <button class="btn btn-primary" onclick="showSection('materi')"> Lihat Materi</button>
-                        <button class="btn btn-success" onclick="showSection('login')">️ Mulai Latihan</button>
-                    </div>
-                </div>
-            </div>
+    const bankSoalPG = [
+        { soal: "Apa arti dari kata تِلْفَازٌ?", options: ["Meja tulis", "Televisi", "Sofa", "Jam"], jawaban: 1 },
+        { soal: "Kata أَرِيكَةٌ dalam bahasa Indonesia berarti...", options: ["Karpet", "Vas bunga", "Sofa", "Dinding"], jawaban: 2 },
+        { soal: "Keterangan tempat أَمَامَ artinya...", options: ["Di belakang", "Di samping", "Di depan", "Di atas"], jawaban: 2 },
+        { soal: "Kata وَرَاءَ memiliki arti...", options: ["Di depan", "Di dalam", "Di antara", "Di belakang"], jawaban: 3 },
+        { soal: "جَانِبَ artinya...", options: ["Di samping", "Di atas", "Di bawah", "Di dalam"], jawaban: 0 },
+        { soal: "Keterangan tempat yang berarti 'di antara' adalah...", options: ["فِي", "عَلَى", "بَيْنَ", "أَمَامَ"], jawaban: 2 },
+        { soal: "Kata فِي artinya...", options: ["Di atas", "Di dalam", "Di depan", "Di samping"], jawaban: 1 },
+        { soal: "عَلَى berarti...", options: ["Di dalam", "Di belakang", "Di atas", "Di antara"], jawaban: 2 },
+        { soal: "Kalimat هَارُونٌ أَمَامَ الْأَبِ artinya...", options: ["Harun di belakang ayah", "Harun di samping ayah", "Harun di depan ayah", "Harun di atas ayah"], jawaban: 2 },
+        { soal: "أُمِّي وَرَاءَ الْأُخْتِ artinya...", options: ["Ibuku di depan saudara perempuan", "Ibuku di belakang saudara perempuan", "Ibuku di samping saudara perempuan", "Ibuku di antara saudara perempuan"], jawaban: 1 },
+        { soal: "التِّلْفَازُ عَلَى الْمَكْتَبِ artinya...", options: ["TV di dalam meja", "TV di bawah meja", "TV di atas meja", "TV di samping meja"], jawaban: 2 },
+        { soal: "الزَّهْرِيَّةُ فِي الْغُرْفَةِ artinya...", options: ["Vas bunga di atas ruangan", "Vas bunga di dalam ruangan", "Vas bunga di depan ruangan", "Vas bunga di belakang ruangan"], jawaban: 1 },
+        { soal: "الْأَخُ بَيْنَ الْأَبِ وَالْأُمِّ artinya...", options: ["Saudara laki-laki di depan ayah dan ibu", "Saudara laki-laki di belakang ayah dan ibu", "Saudara laki-laki di antara ayah dan ibu", "Saudara laki-laki di samping ayah dan ibu"], jawaban: 2 },
+        { soal: "Kata مِفْرَشٌ artinya...", options: ["Jam", "Karpet", "Meja", "Dinding"], jawaban: 1 },
+        { soal: "الْجِدَارُ وَرَاءَ الْأَرِيكَةِ artinya...", options: ["Dinding di depan sofa", "Dinding di samping sofa", "Dinding di belakang sofa", "Dinding di atas sofa"], jawaban: 2 },
+        { soal: "Keterangan tempat yang selalu diikuti dua objek dengan huruf وَ adalah...", options: ["أَمَامَ", "وَرَاءَ", "جَانِبَ", "بَيْنَ"], jawaban: 3 },
+        { soal: "سَاعَةٌ artinya...", options: ["Vas bunga", "Jam", "Sofa", "Meja tulis"], jawaban: 1 },
+        { soal: "Kalimat yang benar untuk 'Ibu di samping ayah' adalah...", options: ["الْأُمُّ أَمَامَ الْأَبِ", "الْأُمُّ وَرَاءَ الْأَبِ", "الْأُمُّ جَانِبَ الْأَبِ", "الْأُمُّ فِي الْأَبِ"], jawaban: 2 },
+        { soal: "Jika buku berada di dalam tas, kalimat Arabnya adalah...", options: ["الْكِتَابُ عَلَى الْحَقِيبَةِ", "الْكِتَابُ فِي الْحَقِيبَةِ", "الْكِتَابُ أَمَامَ الْحَقِيبَةِ", "الْكِتَابُ وَرَاءَ الْحَقِيبَةِ"], jawaban: 1 },
+        { soal: "غُرْفَةُ الْعَائِلَةِ artinya...", options: ["Ruang tamu", "Ruang keluarga", "Ruang tidur", "Ruang makan"], jawaban: 1 }
+    ];
 
-            <div id="loginSection" style="display: none;">
-                <div class="section">
-                    <h2>📝 Data Siswa</h2>
-                    <div class="form-group">
-                        <label for="studentName">Nama Lengkap: *</label>
-                        <input type="text" id="studentName" placeholder="Masukkan nama lengkap Anda" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="studentClass">Kelas: *</label>
-                        <input type="text" id="studentClass" placeholder="Contoh: 6A" value="6" required>
-                    </div>
-                    <div class="nav-buttons">
-                        <button class="btn btn-primary" onclick="startQuiz()">🚀 Mulai Mengerjakan</button>
-                        <button class="btn btn-warning" onclick="showSection('menu')">← Kembali</button>
-                    </div>
-                </div>
-            </div>
+    const bankSoalEssay = [
+        { soal: "Sebutkan 6 ظَرْفُ الْمَكَانِ (keterangan tempat) yang telah dipelajari beserta artinya!", jawaban: "أَمَامَ = Di depan, وَرَاءَ = Di belakang, جَانِبَ = Di samping, بَيْنَ = Di antara, فِي = Di dalam, عَلَى = Di atas" },
+        { soal: "Terjemahkan kalimat berikut ke dalam bahasa Indonesia: هَارُونٌ أَمَامَ التِّلْفَازِ", jawaban: "Harun di depan TV" },
+        { soal: "Terjemahkan kalimat berikut ke dalam bahasa Indonesia: الْأَبُ جَانِبَ الْأُمِّ", jawaban: "Ayah di samping ibu" },
+        { soal: "Buatlah kalimat bahasa Arab untuk menyatakan 'Vas bunga di atas meja'!", jawaban: "الزَّهْرِيَّةُ عَلَى الْمَكْتَبِ" },
+        { soal: "Buatlah kalimat bahasa Arab untuk menyatakan 'Karpet di dalam ruangan'!", jawaban: "الْمِفْرَشُ فِي الْغُرْفَةِ" },
+        { soal: "Jelaskan perbedaan penggunaan بَيْنَ dengan keterangan tempat lainnya!", jawaban: "بَيْنَ selalu diikuti dua objek yang dihubungkan dengan huruf وَ (dan). Contoh: بَيْنَ الْأَبِ وَالْأُمِّ. Sedangkan keterangan tempat lain hanya membutuhkan satu objek." },
+        { soal: "Terjemahkan kalimat berikut ke dalam bahasa Arab: 'Dinding di belakang sofa'", jawaban: "الْجِدَارُ وَرَاءَ الْأَرِيكَةِ" },
+        { soal: "Terjemahkan kalimat berikut ke dalam bahasa Arab: 'Saudara laki-laki di antara ayah dan ibu'", jawaban: "الْأَخُ بَيْنَ الْأَبِ وَالْأُمِّ" },
+        { soal: "Sebutkan 5 kosakata benda-benda yang ada di ruang keluarga dalam bahasa Arab beserta artinya!", jawaban: "تِلْفَازٌ = Televisi, أَرِيكَةٌ = Sofa, مَكْتَبٌ = Meja tulis, سَاعَةٌ = Jam, مِفْرَشٌ = Karpet" },
+        { soal: "Buatlah 3 kalimat sederhana menggunakan ظَرْفُ الْمَكَانِ yang berbeda-beda, lalu terjemahkan ke dalam bahasa Indonesia!", jawaban: "Contoh: التِّلْفَازُ عَلَى الْمَكْتَبِ (TV di atas meja), الْأُمُّ فِي الْغُرْفَةِ (Ibu di dalam ruangan), هَارُونٌ أَمَامَ الْأَبِ (Harun di depan ayah)" }
+    ];
 
-            <div id="materiSection" style="display: none;">
-                <div class="section">
-                    <h2>📖 KOSAKATA (مُفْرَدَاتٌ)</h2>
-                    <table>
-                        <thead><tr><th>No</th><th>Bahasa Arab</th><th>Cara Baca</th><th>Arti</th></tr></thead>
-                        <tbody>
-                            <tr><td>1</td><td class="arabic">تِلْفَازٌ</td><td>Tilfāzun</td><td>Televisi</td></tr>
-                            <tr><td>2</td><td class="arabic">مَكْتَبٌ</td><td>Maktabun</td><td>Meja Tulis</td></tr>
-                            <tr><td>3</td><td class="arabic">أَرِيكَةٌ</td><td>Arīkatun</td><td>Sofa</td></tr>
-                            <tr><td>4</td><td class="arabic">سَاعَةٌ</td><td>Sā'atun</td><td>Jam</td></tr>
-                            <tr><td>5</td><td class="arabic">زَهْرِيَّةٌ</td><td>Zahrīyatun</td><td>Vas Bunga</td></tr>
-                            <tr><td>6</td><td class="arabic">مِفْرَشٌ</td><td>Mifrasyun</td><td>Karpet</td></tr>
-                            <tr><td>7</td><td class="arabic">جِدَارٌ</td><td>Jidārun</td><td>Dinding</td></tr>
-                            <tr><td>8</td><td class="arabic">غُرْفَةٌ</td><td>Ghurfatun</td><td>Ruangan</td></tr>
-                            <tr><td>9</td><td class="arabic">عَائِلَةٌ</td><td>'Ā'ilatun</td><td>Keluarga</td></tr>
-                            <tr><td>10</td><td class="arabic">أَبٌ</td><td>Abun</td><td>Ayah</td></tr>
-                            <tr><td>11</td><td class="arabic">أُمٌّ</td><td>Ummun</td><td>Ibu</td></tr>
-                            <tr><td>12</td><td class="arabic">أَخٌ</td><td>Akhun</td><td>Saudara Laki-laki</td></tr>
-                            <tr><td>13</td><td class="arabic">أُخْتٌ</td><td>Ukhtun</td><td>Saudara Perempuan</td></tr>
-                            <tr><td>14</td><td class="arabic">هَارُونٌ</td><td>Hārūnun</td><td>Harun (nama)</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+    let currentSession = { name: '', class: '', sessionNumber: 1, soalPG: [], soalEssay: [], jawabanPG: [], jawabanEssay: [] };
 
-                <div class="section">
-                    <h2>📌 ZHARFUL MAKAN (ظَرْفُ الْمَكَانِ)</h2>
-                    <p style="margin-bottom: 15px;"><strong>Zharful Makan</strong> adalah keterangan tempat yang menunjukkan posisi atau letak sesuatu.</p>
-                    <h3>🔹 Keterangan Tempat Dasar</h3>
-                    <table>
-                        <thead><tr><th>Bahasa Arab</th><th>Cara Baca</th><th>Arti</th></tr></thead>
-                        <tbody>
-                            <tr><td class="arabic">أَمَامَ</td><td>Amāma</td><td>Di Depan</td></tr>
-                            <tr><td class="arabic">وَرَاءَ</td><td>Warā'a</td><td>Di Belakang</td></tr>
-                            <tr><td class="arabic">جَانِبَ</td><td>Jāniba</td><td>Di Samping</td></tr>
-                        </tbody>
-                    </table>
-                    <h3> Keterangan Tempat Tambahan</h3>
-                    <table>
-                        <thead><tr><th>Bahasa Arab</th><th>Cara Baca</th><th>Arti</th></tr></thead>
-                        <tbody>
-                            <tr><td class="arabic">بَيْنَ</td><td>Baina</td><td>Di Antara</td></tr>
-                            <tr><td class="arabic">فِي</td><td>Fī</td><td>Di Dalam</td></tr>
-                            <tr><td class="arabic">عَلَى</td><td>'Alā</td><td>Di Atas</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+    function showSection(section) {
+        document.getElementById('mainMenu').style.display = 'none';
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('materiSection').style.display = 'none';
+        document.getElementById('quizSection').style.display = 'none';
+        document.getElementById('resultSection').style.display = 'none';
 
-                <div class="section">
-                    <h2>📝 CONTOH KALIMAT</h2>
-                    <table>
-                        <thead><tr><th>No</th><th>Bahasa Arab</th><th>Arti</th></tr></thead>
-                        <tbody>
-                            <tr><td>1</td><td class="arabic">هَارُونٌ أَمَامَ الْأَبِ</td><td>Harun di depan ayah</td></tr>
-                            <tr><td>2</td><td class="arabic">أُمِّي وَرَاءَ الْأُخْتِ</td><td>Ibuku di belakang saudara perempuan</td></tr>
-                            <tr><td>3</td><td class="arabic">الْأَبُ جَانِبَ الْأُمِّ</td><td>Ayah di samping ibu</td></tr>
-                            <tr><td>4</td><td class="arabic">التِّلْفَازُ عَلَى الْمَكْتَبِ</td><td>TV di atas meja</td></tr>
-                            <tr><td>5</td><td class="arabic">الزَّهْرِيَّةُ فِي الْغُرْفَةِ</td><td>Vas bunga di dalam ruangan</td></tr>
-                            <tr><td>6</td><td class="arabic">الْأَخُ بَيْنَ الْأَبِ وَالْأُمِّ</td><td>Saudara laki-laki di antara ayah dan ibu</td></tr>
-                            <tr><td>7</td><td class="arabic">الْجِدَارُ وَرَاءَ الْأَرِيكَةِ</td><td>Dinding di belakang sofa</td></tr>
-                            <tr><td>8</td><td class="arabic">الْمِفْرَشُ أَمَامَ التِّلْفَازِ</td><td>Karpet di depan TV</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+        if (section === 'menu') document.getElementById('mainMenu').style.display = 'block';
+        else if (section === 'login') document.getElementById('loginSection').style.display = 'block';
+        else if (section === 'materi') document.getElementById('materiSection').style.display = 'block';
+        else if (section === 'quiz') document.getElementById('quizSection').style.display = 'block';
+        else if (section === 'result') document.getElementById('resultSection').style.display = 'block';
+        
+        window.scrollTo(0, 0);
+    }
 
-                <div class="section">
-                    <h2>💡 PENJELASAN PENGGUNAAN</h2>
-                    <h3>1. أَمَامَ (Di Depan)</h3>
-                    <p>Digunakan ketika sesuatu berada di <strong>depan</strong> benda/orang lain.</p>
-                    <p class="arabic" style="margin-top: 10px;">هَارُونٌ أَمَامَ التِّلْفَازِ</p>
-                    <h3>2. وَرَاءَ (Di Belakang)</h3>
-                    <p>Digunakan ketika sesuatu berada di <strong>belakang</strong> benda/orang lain.</p>
-                    <p class="arabic" style="margin-top: 10px;">الْجِدَارُ وَرَاءَ الْأَرِيكَةِ</p>
-                    <h3>3. جَانِبَ (Di Samping)</h3>
-                    <p>Digunakan ketika sesuatu berada di <strong>samping</strong> benda/orang lain.</p>
-                    <p class="arabic" style="margin-top: 10px;">الْأَبُ جَانِبَ الْأُمِّ</p>
-                    <h3>4. بَيْنَ (Di Antara)</h3>
-                    <p>Digunakan ketika sesuatu berada di <strong>antara dua</strong> benda/orang. <strong>Penting:</strong> Setelah بَيْنَ harus ada dua objek yang dihubungkan dengan وَ (dan).</p>
-                    <p class="arabic" style="margin-top: 10px;">الْأَخُ بَيْنَ الْأَبِ وَالْأُمِّ</p>
-                    <h3>5. فِي (Di Dalam)</h3>
-                    <p>Digunakan ketika sesuatu berada di <strong>dalam</strong> suatu tempat/ruangan.</p>
-                    <p class="arabic" style="margin-top: 10px;">الزَّهْرِيَّةُ فِي الْغُرْفَةِ</p>
-                    <h3>6. عَلَى (Di Atas)</h3>
-                    <p>Digunakan ketika sesuatu berada di <strong>atas</strong> permukaan benda lain.</p>
-                    <p class="arabic" style="margin-top: 10px;">التِّلْفَازُ عَلَى الْمَكْتَبِ</p>
-                </div>
-
-                <div class="nav-buttons">
-                    <button class="btn btn-success" onclick="showSection('login')">✏️ Mulai Latihan</button>
-                    <button class="btn btn-warning" onclick="showSection('menu')">🏠 Menu Utama</button>
-                </div>
-            </div>
-
-            <div id="quizSection" style="display: none;">
-                <div class="student-info" id="studentInfo"></div>
-                <div id="quizContent"></div>
-                <div class="nav-buttons">
-                    <button class="btn btn-success" id="submitBtn" onclick="submitQuiz()">✅ Kumpulkan Jawaban</button>
-                </div>
-            </div>
-
-            <div id="resultSection" style="display: none;">
-                <div class="result" id="resultContent"></div>
-                <div class="nav-buttons">
-                    <button class="btn btn-primary" onclick="startNewSession()">🔄 Sesi Baru</button>
-                    <button class="btn btn-warning" onclick="showSection('menu')">🏠 Menu Utama</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="dynamicLoadingOverlay">
-        <div class="loading-box">
-            <div class="spinner"></div>
-            <h3>Mengirim Jawaban...</h3>
-            <p>Mohon tunggu, data sedang dikirim ke guru.</p>
-        </div>
-    </div>
-
-    <script>
-        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyrx7pm8HyqplUFGBVhW3JSb6Qlgj-5K5ImB5p1ExWHWFJ3DKe0RD0SmqyIkaImVXdZbA/exec";
-
-        const bankSoalPG = [
-            { soal: "Apa arti dari kata تِلْفَازٌ?", options: ["Meja tulis", "Televisi", "Sofa", "Jam"], jawaban: 1 },
-            { soal: "Kata أَرِيكَةٌ dalam bahasa Indonesia berarti...", options: ["Karpet", "Vas bunga", "Sofa", "Dinding"], jawaban: 2 },
-            { soal: "Keterangan tempat أَمَامَ artinya...", options: ["Di belakang", "Di samping", "Di depan", "Di atas"], jawaban: 2 },
-            { soal: "Kata وَرَاءَ memiliki arti...", options: ["Di depan", "Di dalam", "Di antara", "Di belakang"], jawaban: 3 },
-            { soal: "جَانِبَ artinya...", options: ["Di samping", "Di atas", "Di bawah", "Di dalam"], jawaban: 0 },
-            { soal: "Keterangan tempat yang berarti 'di antara' adalah...", options: ["فِي", "عَلَى", "بَيْنَ", "أَمَامَ"], jawaban: 2 },
-            { soal: "Kata فِي artinya...", options: ["Di atas", "Di dalam", "Di depan", "Di samping"], jawaban: 1 },
-            { soal: "عَلَى berarti...", options: ["Di dalam", "Di belakang", "Di atas", "Di antara"], jawaban: 2 },
-            { soal: "Kalimat هَارُونٌ أَمَامَ الْأَبِ artinya...", options: ["Harun di belakang ayah", "Harun di samping ayah", "Harun di depan ayah", "Harun di atas ayah"], jawaban: 2 },
-            { soal: "أُمِّي وَرَاءَ الْأُخْتِ artinya...", options: ["Ibuku di depan saudara perempuan", "Ibuku di belakang saudara perempuan", "Ibuku di samping saudara perempuan", "Ibuku di antara saudara perempuan"], jawaban: 1 },
-            { soal: "التِّلْفَازُ عَلَى الْمَكْتَبِ artinya...", options: ["TV di dalam meja", "TV di bawah meja", "TV di atas meja", "TV di samping meja"], jawaban: 2 },
-            { soal: "الزَّهْرِيَّةُ فِي الْغُرْفَةِ artinya...", options: ["Vas bunga di atas ruangan", "Vas bunga di dalam ruangan", "Vas bunga di depan ruangan", "Vas bunga di belakang ruangan"], jawaban: 1 },
-            { soal: "الْأَخُ بَيْنَ الْأَبِ وَالْأُمِّ artinya...", options: ["Saudara laki-laki di depan ayah dan ibu", "Saudara laki-laki di belakang ayah dan ibu", "Saudara laki-laki di antara ayah dan ibu", "Saudara laki-laki di samping ayah dan ibu"], jawaban: 2 },
-            { soal: "Kata مِفْرَشٌ artinya...", options: ["Jam", "Karpet", "Meja", "Dinding"], jawaban: 1 },
-            { soal: "الْجِدَارُ وَرَاءَ الْأَرِيكَةِ artinya...", options: ["Dinding di depan sofa", "Dinding di samping sofa", "Dinding di belakang sofa", "Dinding di atas sofa"], jawaban: 2 },
-            { soal: "Keterangan tempat yang selalu diikuti dua objek dengan huruf وَ adalah...", options: ["أَمَامَ", "وَرَاءَ", "جَانِبَ", "بَيْنَ"], jawaban: 3 },
-            { soal: "سَاعَةٌ artinya...", options: ["Vas bunga", "Jam", "Sofa", "Meja tulis"], jawaban: 1 },
-            { soal: "Kalimat yang benar untuk 'Ibu di samping ayah' adalah...", options: ["الْأُمُّ أَمَامَ الْأَبِ", "الْأُمُّ وَرَاءَ الْأَبِ", "الْأُمُّ جَانِبَ الْأَبِ", "الْأُمُّ فِي الْأَبِ"], jawaban: 2 },
-            { soal: "Jika buku berada di dalam tas, kalimat Arabnya adalah...", options: ["الْكِتَابُ عَلَى الْحَقِيبَةِ", "الْكِتَابُ فِي الْحَقِيبَةِ", "الْكِتَابُ أَمَامَ الْحَقِيبَةِ", "الْكِتَابُ وَرَاءَ الْحَقِيبَةِ"], jawaban: 1 },
-            { soal: "غُرْفَةُ الْعَائِلَةِ artinya...", options: ["Ruang tamu", "Ruang keluarga", "Ruang tidur", "Ruang makan"], jawaban: 1 }
-        ];
-
-        const bankSoalEssay = [
-            { soal: "Sebutkan 6 ظَرْفُ الْمَكَانِ (keterangan tempat) yang telah dipelajari beserta artinya!", jawaban: "أَمَامَ = Di depan, وَرَاءَ = Di belakang, جَانِبَ = Di samping, بَيْنَ = Di antara, فِي = Di dalam, عَلَى = Di atas" },
-            { soal: "Terjemahkan kalimat berikut ke dalam bahasa Indonesia: هَارُونٌ أَمَامَ التِّلْفَازِ", jawaban: "Harun di depan TV" },
-            { soal: "Terjemahkan kalimat berikut ke dalam bahasa Indonesia: الْأَبُ جَانِبَ الْأُمِّ", jawaban: "Ayah di samping ibu" },
-            { soal: "Buatlah kalimat bahasa Arab untuk menyatakan 'Vas bunga di atas meja'!", jawaban: "الزَّهْرِيَّةُ عَلَى الْمَكْتَبِ" },
-            { soal: "Buatlah kalimat bahasa Arab untuk menyatakan 'Karpet di dalam ruangan'!", jawaban: "الْمِفْرَشُ فِي الْغُرْفَةِ" },
-            { soal: "Jelaskan perbedaan penggunaan بَيْنَ dengan keterangan tempat lainnya!", jawaban: "بَيْنَ selalu diikuti dua objek yang dihubungkan dengan huruf وَ (dan). Contoh: بَيْنَ الْأَبِ وَالْأُمِّ. Sedangkan keterangan tempat lain hanya membutuhkan satu objek." },
-            { soal: "Terjemahkan kalimat berikut ke dalam bahasa Arab: 'Dinding di belakang sofa'", jawaban: "الْجِدَارُ وَرَاءَ الْأَرِيكَةِ" },
-            { soal: "Terjemahkan kalimat berikut ke dalam bahasa Arab: 'Saudara laki-laki di antara ayah dan ibu'", jawaban: "الْأَخُ بَيْنَ الْأَبِ وَالْأُمِّ" },
-            { soal: "Sebutkan 5 kosakata benda-benda yang ada di ruang keluarga dalam bahasa Arab beserta artinya!", jawaban: "تِلْفَازٌ = Televisi, أَرِيكَةٌ = Sofa, مَكْتَبٌ = Meja tulis, سَاعَةٌ = Jam, مِفْرَشٌ = Karpet" },
-            { soal: "Buatlah 3 kalimat sederhana menggunakan ظَرْفُ الْمَكَانِ yang berbeda-beda, lalu terjemahkan ke dalam bahasa Indonesia!", jawaban: "Contoh: التِّلْفَازُ عَلَى الْمَكْتَبِ (TV di atas meja), الْأُمُّ فِي الْغُرْفَةِ (Ibu di dalam ruangan), هَارُونٌ أَمَامَ الْأَبِ (Harun di depan ayah)" }
-        ];
-
-        let currentSession = { name: '', class: '', sessionNumber: 1, soalPG: [], soalEssay: [], jawabanPG: [], jawabanEssay: [] };
-
-        function showSection(section) {
-            document.getElementById('mainMenu').style.display = 'none';
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('materiSection').style.display = 'none';
-            document.getElementById('quizSection').style.display = 'none';
-            document.getElementById('resultSection').style.display = 'none';
-
-            if (section === 'menu') document.getElementById('mainMenu').style.display = 'block';
-            else if (section === 'login') document.getElementById('loginSection').style.display = 'block';
-            else if (section === 'materi') document.getElementById('materiSection').style.display = 'block';
-            else if (section === 'quiz') document.getElementById('quizSection').style.display = 'block';
-            else if (section === 'result') document.getElementById('resultSection').style.display = 'block';
-            
-            window.scrollTo(0, 0);
+    function shuffleArray(array) {
+        const newArray = [...array];
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
         }
+        return newArray;
+    }
 
-        function shuffleArray(array) {
-            const newArray = [...array];
-            for (let i = newArray.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-            }
-            return newArray;
-        }
+    function startQuiz() {
+        const name = document.getElementById('studentName').value.trim();
+        const kelas = document.getElementById('studentClass').value.trim();
 
-        function startQuiz() {
-            const name = document.getElementById('studentName').value.trim();
-            const kelas = document.getElementById('studentClass').value.trim();
+        if (!name) { alert('️ Silakan masukkan nama lengkap Anda!'); return; }
+        if (!kelas) { alert('️ Silakan masukkan kelas Anda!'); return; }
 
-            if (!name) { alert('⚠️ Silakan masukkan nama lengkap Anda!'); return; }
-            if (!kelas) { alert('⚠️ Silakan masukkan kelas Anda!'); return; }
+        currentSession.name = name;
+        currentSession.class = kelas;
 
-            currentSession.name = name;
-            currentSession.class = kelas;
+        const shuffledPG = shuffleArray(bankSoalPG);
+        currentSession.soalPG = shuffledPG.slice(0, 7);
 
-            const shuffledPG = shuffleArray(bankSoalPG);
-            currentSession.soalPG = shuffledPG.slice(0, 7);
+        const shuffledEssay = shuffleArray(bankSoalEssay);
+        currentSession.soalEssay = shuffledEssay.slice(0, 3);
 
-            const shuffledEssay = shuffleArray(bankSoalEssay);
-            currentSession.soalEssay = shuffledEssay.slice(0, 3);
+        currentSession.jawabanPG = new Array(7).fill(null);
+        currentSession.jawabanEssay = new Array(3).fill('');
 
-            currentSession.jawabanPG = new Array(7).fill(null);
-            currentSession.jawabanEssay = new Array(3).fill('');
+        document.getElementById('studentInfo').innerHTML = `
+            <strong> Nama:</strong> ${currentSession.name} | 
+            <strong>🏫 Kelas:</strong> ${currentSession.class} |
+            <strong> Sesi ke:</strong> ${currentSession.sessionNumber}
+        `;
 
-            document.getElementById('studentInfo').innerHTML = `
-                <strong>👤 Nama:</strong> ${currentSession.name} | 
-                <strong>🏫 Kelas:</strong> ${currentSession.class} |
-                <strong>📝 Sesi ke:</strong> ${currentSession.sessionNumber}
+        renderQuiz();
+        showSection('quiz');
+    }
+
+    function renderQuiz() {
+        let html = '<h2 style="color: #667eea; margin-bottom: 20px;">📝 Soal Latihan</h2>';
+
+        html += '<div class="section"><h3>A. Pilihan Ganda (7 Soal)</h3><p style="margin-bottom:15px;color:#666;">Pilihlah satu jawaban yang paling benar!</p>';
+        currentSession.soalPG.forEach((soal, index) => {
+            html += `
+                <div class="question">
+                    <h4>${index + 1}. ${soal.soal}</h4>
+                    <div class="options">
+                        ${soal.options.map((option, optIndex) => `
+                            <label class="option">
+                                <input type="radio" name="pg${index}" value="${optIndex}" 
+                                    onchange="currentSession.jawabanPG[${index}] = ${optIndex}">
+                                ${String.fromCharCode(65 + optIndex)}. ${option}
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
             `;
+        });
+        html += '</div>';
 
-            renderQuiz();
-            showSection('quiz');
-        }
-
-        function renderQuiz() {
-            let html = '<h2 style="color: #667eea; margin-bottom: 20px;"> Soal Latihan</h2>';
-
-            html += '<div class="section"><h3>A. Pilihan Ganda (7 Soal)</h3><p style="margin-bottom:15px;color:#666;">Pilihlah satu jawaban yang paling benar!</p>';
-            currentSession.soalPG.forEach((soal, index) => {
-                html += `
-                    <div class="question">
-                        <h4>${index + 1}. ${soal.soal}</h4>
-                        <div class="options">
-                            ${soal.options.map((option, optIndex) => `
-                                <label class="option">
-                                    <input type="radio" name="pg${index}" value="${optIndex}" 
-                                        onchange="currentSession.jawabanPG[${index}] = ${optIndex}">
-                                    ${String.fromCharCode(65 + optIndex)}. ${option}
-                                </label>
-                            `).join('')}
-                        </div>
+        html += '<div class="section"><h3>B. Essay (3 Soal)</h3><p style="margin-bottom:15px;color:#666;">Jawablah pertanyaan berikut dengan jelas! (Akan dinilai oleh guru)</p>';
+        currentSession.soalEssay.forEach((soal, index) => {
+            html += `
+                <div class="question">
+                    <h4>${index + 1}. ${soal.soal}</h4>
+                    <div class="form-group">
+                        <textarea id="essay${index}" rows="4" placeholder="Tulis jawaban Anda di sini..."
+                            oninput="currentSession.jawabanEssay[${index}] = this.value"></textarea>
                     </div>
-                `;
+                </div>
+            `;
+        });
+        html += '</div>';
+
+        document.getElementById('quizContent').innerHTML = html;
+    }
+
+    // ============================================
+    // PERBAIKAN: Metode pengiriman data yang RELIABLE
+    // ============================================
+    async function sendDataToSpreadsheet(data) {
+        try {
+            console.log('📤 Mengirim data:', JSON.stringify(data));
+            
+            // Metode: Kirim sebagai JSON string dengan Content-Type text/plain
+            // Ini metode PALING RELIABLE untuk Google Apps Script
+            const response = await fetch(APPS_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8'
+                },
+                body: JSON.stringify(data)
             });
-            html += '</div>';
 
-            html += '<div class="section"><h3>B. Essay (3 Soal)</h3><p style="margin-bottom:15px;color:#666;">Jawablah pertanyaan berikut dengan jelas! (Akan dinilai oleh guru)</p>';
-            currentSession.soalEssay.forEach((soal, index) => {
-                html += `
-                    <div class="question">
-                        <h4>${index + 1}. ${soal.soal}</h4>
-                        <div class="form-group">
-                            <textarea id="essay${index}" rows="4" placeholder="Tulis jawaban Anda di sini..."
-                                oninput="currentSession.jawabanEssay[${index}] = this.value"></textarea>
-                        </div>
-                    </div>
-                `;
-            });
-            html += '</div>';
-
-            document.getElementById('quizContent').innerHTML = html;
+            console.log('✅ Response status:', response.status);
+            return { status: 'success', message: 'Data berhasil dikirim!' };
+        } catch (error) {
+            console.error(' Error:', error);
+            return { status: 'error', message: error.message };
         }
+    }
 
-        // ============================================
-        // PERBAIKAN UTAMA: Metode pengiriman data
-        // ============================================
-        async function sendDataToSpreadsheet(data) {
-            try {
-                // Metode 1: Gunakan FormData (paling reliable untuk Google Apps Script)
-                const formData = new FormData();
-                formData.append('data', JSON.stringify(data));
-
-                const response = await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    body: formData
-                    // TIDAK pakai mode: 'no-cors' agar bisa baca response
-                });
-
-                const result = await response.json();
-                console.log('Response dari server:', result);
-                
-                if (result.status === 'success') {
-                    return { status: 'success', message: 'Data berhasil dikirim!' };
-                } else {
-                    return { status: 'error', message: result.message || 'Gagal menyimpan data' };
-                }
-            } catch (error) {
-                console.error('Error detail:', error);
-                
-                // Fallback: Coba dengan text/plain jika JSON gagal
-                try {
-                    await fetch(APPS_SCRIPT_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                        body: JSON.stringify(data)
-                    });
-                    return { status: 'success', message: 'Data berhasil dikirim (fallback)!' };
-                } catch (fallbackError) {
-                    console.error('Fallback juga gagal:', fallbackError);
-                    return { status: 'error', message: error.message };
-                }
-            }
-        }
-
-        async function submitQuiz() {
-            const unansweredPG = currentSession.jawabanPG.filter(j => j === null).length;
-            if (unansweredPG > 0) {
-                if (!confirm(`⚠️ Masih ada ${unansweredPG} soal pilihan ganda yang belum dijawab. Yakin ingin mengumpulkan?`)) {
-                    return;
-                }
-            }
-
-            const unansweredEssay = currentSession.jawabanEssay.filter(j => j.trim() === '').length;
-            if (unansweredEssay > 0) {
-                if (!confirm(`️ Masih ada ${unansweredEssay} soal essay yang belum dijawab. Yakin ingin mengumpulkan?`)) {
-                    return;
-                }
-            }
-
-            if (!confirm('✅ Yakin ingin mengumpulkan jawaban? Data akan dikirim ke guru.')) {
+    async function submitQuiz() {
+        const unansweredPG = currentSession.jawabanPG.filter(j => j === null).length;
+        if (unansweredPG > 0) {
+            if (!confirm(`⚠️ Masih ada ${unansweredPG} soal pilihan ganda yang belum dijawab. Yakin ingin mengumpulkan?`)) {
                 return;
             }
+        }
 
-            let skorPG = 0;
-            currentSession.soalPG.forEach((soal, index) => {
-                if (currentSession.jawabanPG[index] === soal.jawaban) {
-                    skorPG++;
-                }
-            });
-
-            const skorPGFinal = (skorPG / 7) * 70;
-            const jawabanPGFormatted = currentSession.jawabanPG.map(j => 
-                j !== null ? String.fromCharCode(65 + j) : '-'
-            );
-
-            const dataToSend = {
-                nama: currentSession.name,
-                kelas: currentSession.class,
-                sesi: currentSession.sessionNumber,
-                nilaiPG: skorPGFinal.toFixed(1),
-                benarPG: `${skorPG}/7`,
-                jawabanPG: jawabanPGFormatted,
-                jawabanEssay: currentSession.jawabanEssay.map(j => j.trim() || '-')
-            };
-
-            // Tampilkan loading
-            document.getElementById('dynamicLoadingOverlay').style.display = 'flex';
-            document.getElementById('submitBtn').disabled = true;
-
-            console.log('Mengirim data:', dataToSend);
-
-            const result = await sendDataToSpreadsheet(dataToSend);
-
-            // Sembunyikan loading
-            document.getElementById('dynamicLoadingOverlay').style.display = 'none';
-            document.getElementById('submitBtn').disabled = false;
-
-            let resultHTML = `
-                <h2> Hasil Latihan</h2>
-                <p><strong>👤 Nama:</strong> ${currentSession.name}</p>
-                <p><strong> Kelas:</strong> ${currentSession.class}</p>
-                <p><strong>📝 Sesi ke:</strong> ${currentSession.sessionNumber}</p>
-                <hr style="margin: 20px 0; border-color: rgba(255,255,255,0.3);">
-                <p style="font-size: 1.5em;"><strong>📊 Nilai Pilihan Ganda: ${skorPGFinal.toFixed(1)} / 70</strong></p>
-                <p><strong>✅ Benar:</strong> ${skorPG} dari 7 soal</p>
-                <hr style="margin: 20px 0; border-color: rgba(255,255,255,0.3);">
-            `;
-
-            if (result.status === 'success') {
-                resultHTML += `<p><span class="status-badge status-success">✅ Data BERHASIL dikirim ke guru!</span></p>`;
-            } else {
-                resultHTML += `<p><span class="status-badge status-error"> GAGAL mengirim: ${result.message}</span></p>`;
-                resultHTML += `<p style="margin-top:10px;"><span class="status-badge status-pending">⚠️ Screenshot hasil ini dan kirim ke guru secara manual!</span></p>`;
+        const unansweredEssay = currentSession.jawabanEssay.filter(j => j.trim() === '').length;
+        if (unansweredEssay > 0) {
+            if (!confirm(`⚠️ Masih ada ${unansweredEssay} soal essay yang belum dijawab. Yakin ingin mengumpulkan?`)) {
+                return;
             }
+        }
 
+        if (!confirm('✅ Yakin ingin mengumpulkan jawaban? Data akan dikirim ke guru.')) {
+            return;
+        }
+
+        let skorPG = 0;
+        currentSession.soalPG.forEach((soal, index) => {
+            if (currentSession.jawabanPG[index] === soal.jawaban) {
+                skorPG++;
+            }
+        });
+
+        const skorPGFinal = (skorPG / 7) * 70;
+        const jawabanPGFormatted = currentSession.jawabanPG.map(j => 
+            j !== null ? String.fromCharCode(65 + j) : '-'
+        );
+
+        const dataToSend = {
+            nama: currentSession.name,
+            kelas: currentSession.class,
+            sesi: currentSession.sessionNumber,
+            nilaiPG: skorPGFinal.toFixed(1),
+            benarPG: `${skorPG}/7`,
+            jawabanPG: jawabanPGFormatted,
+            jawabanEssay: currentSession.jawabanEssay.map(j => j.trim() || '-')
+        };
+
+        console.log(' Data yang akan dikirim:', dataToSend);
+
+        // Tampilkan loading
+        document.getElementById('dynamicLoadingOverlay').style.display = 'flex';
+        document.getElementById('submitBtn').disabled = true;
+
+        const result = await sendDataToSpreadsheet(dataToSend);
+
+        // Sembunyikan loading
+        document.getElementById('dynamicLoadingOverlay').style.display = 'none';
+        document.getElementById('submitBtn').disabled = false;
+
+        let resultHTML = `
+            <h2> Hasil Latihan</h2>
+            <p><strong>👤 Nama:</strong> ${currentSession.name}</p>
+            <p><strong> Kelas:</strong> ${currentSession.class}</p>
+            <p><strong>📝 Sesi ke:</strong> ${currentSession.sessionNumber}</p>
+            <hr style="margin: 20px 0; border-color: rgba(255,255,255,0.3);">
+            <p style="font-size: 1.5em;"><strong> Nilai Pilihan Ganda: ${skorPGFinal.toFixed(1)} / 70</strong></p>
+            <p><strong>✅ Benar:</strong> ${skorPG} dari 7 soal</p>
+            <hr style="margin: 20px 0; border-color: rgba(255,255,255,0.3);">
+        `;
+
+        if (result.status === 'success') {
+            resultHTML += `<p><span class="status-badge status-success">✅ Data BERHASIL dikirim ke guru!</span></p>`;
+        } else {
+            resultHTML += `<p><span class="status-badge status-error">❌ GAGAL mengirim: ${result.message}</span></p>`;
+            resultHTML += `<p style="margin-top:10px;"><span class="status-badge status-pending">⚠️ Screenshot hasil ini dan kirim ke guru secara manual!</span></p>`;
+        }
+
+        resultHTML += `
+            <div class="essay-notice">
+                <strong>📝 Catatan:</strong> Jawaban essay Anda sudah dikirim ke guru dan akan dinilai secara manual. 
+                Nilai akhir akan diumumkan oleh guru.
+            </div>
+        `;
+
+        resultHTML += '<div class="answer-review">';
+        resultHTML += '<h3 style="color: #667eea; margin-bottom: 15px;">📋 Review Jawaban Pilihan Ganda:</h3>';
+        
+        currentSession.soalPG.forEach((soal, index) => {
+            const isCorrect = currentSession.jawabanPG[index] === soal.jawaban;
+            const status = isCorrect ? '✅' : '❌';
+            const studentAnswer = currentSession.jawabanPG[index] !== null 
+                ? String.fromCharCode(65 + currentSession.jawabanPG[index]) 
+                : '-';
+            const correctAnswer = String.fromCharCode(65 + soal.jawaban);
+            
             resultHTML += `
-                <div class="essay-notice">
-                    <strong>📝 Catatan:</strong> Jawaban essay Anda sudah dikirim ke guru dan akan dinilai secara manual. 
-                    Nilai akhir akan diumumkan oleh guru.
+                <div class="answer-item ${isCorrect ? 'correct' : 'wrong'}">
+                    <strong>${index + 1}.</strong> ${status} 
+                    Jawaban Anda: <strong>${studentAnswer}</strong> | 
+                    Kunci: <strong>${correctAnswer}. ${soal.options[soal.jawaban]}</strong>
                 </div>
             `;
+        });
+        
+        resultHTML += '</div>';
 
-            resultHTML += '<div class="answer-review">';
-            resultHTML += '<h3 style="color: #667eea; margin-bottom: 15px;">📋 Review Jawaban Pilihan Ganda:</h3>';
-            
-            currentSession.soalPG.forEach((soal, index) => {
-                const isCorrect = currentSession.jawabanPG[index] === soal.jawaban;
-                const status = isCorrect ? '✅' : '❌';
-                const studentAnswer = currentSession.jawabanPG[index] !== null 
-                    ? String.fromCharCode(65 + currentSession.jawabanPG[index]) 
-                    : '-';
-                const correctAnswer = String.fromCharCode(65 + soal.jawaban);
-                
-                resultHTML += `
-                    <div class="answer-item ${isCorrect ? 'correct' : 'wrong'}">
-                        <strong>${index + 1}.</strong> ${status} 
-                        Jawaban Anda: <strong>${studentAnswer}</strong> | 
-                        Kunci: <strong>${correctAnswer}. ${soal.options[soal.jawaban]}</strong>
-                    </div>
-                `;
-            });
-            
-            resultHTML += '</div>';
+        document.getElementById('resultContent').innerHTML = resultHTML;
+        showSection('result');
 
-            document.getElementById('resultContent').innerHTML = resultHTML;
-            showSection('result');
+        currentSession.sessionNumber++;
+    }
 
-            currentSession.sessionNumber++;
-        }
-
-        function startNewSession() {
-            document.getElementById('studentName').value = currentSession.name;
-            document.getElementById('studentClass').value = currentSession.class;
-            showSection('login');
-        }
-    </script>
-</body>
-</html>
+    function startNewSession() {
+        document.getElementById('studentName').value = currentSession.name;
+        document.getElementById('studentClass').value = currentSession.class;
+        showSection('login');
+    }
+</script>
