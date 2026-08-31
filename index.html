@@ -228,8 +228,9 @@
             margin: 10px 0;
         }
 
+        /* PERBAIKAN: Class hidden dengan !important */
         .hidden {
-            display: none;
+            display: none !important;
         }
 
         .nav-buttons {
@@ -357,7 +358,7 @@
         </div>
 
         <div class="content">
-            <!-- Menu Utama -->
+            <!-- Menu Utama - HANYA INI YANG TERLIHAT SAAT PERTAMA KALI -->
             <div id="mainMenu">
                 <div class="section">
                     <h2>🎯 Selamat Datang!</h2>
@@ -372,8 +373,8 @@
                 </div>
             </div>
 
-            <!-- Form Login -->
-            <div id="loginSection" class="hidden">
+            <!-- Form Login - HIDDEN -->
+            <div id="loginSection" class="hidden" style="display: none;">
                 <div class="section">
                     <h2>📝 Data Siswa</h2>
                     <div class="form-group">
@@ -385,14 +386,14 @@
                         <input type="text" id="studentClass" placeholder="Contoh: 6A" value="6" required>
                     </div>
                     <div class="nav-buttons">
-                        <button class="btn btn-primary" onclick="startQuiz()">🚀 Mulai Mengerjakan</button>
+                        <button class="btn btn-primary" onclick="startQuiz()"> Mulai Mengerjakan</button>
                         <button class="btn btn-warning" onclick="showSection('menu')">← Kembali</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Materi -->
-            <div id="materiSection" class="hidden">
+            <!-- Materi - HIDDEN -->
+            <div id="materiSection" class="hidden" style="display: none;">
                 <div class="section">
                     <h2>📖 KOSAKATA (مُفْرَدَاتٌ)</h2>
                     <table>
@@ -444,7 +445,7 @@
                 </div>
 
                 <div class="section">
-                    <h2>📝 CONTOH KALIMAT</h2>
+                    <h2> CONTOH KALIMAT</h2>
                     <table>
                         <thead><tr><th>No</th><th>Bahasa Arab</th><th>Arti</th></tr></thead>
                         <tbody>
@@ -493,8 +494,8 @@
                 </div>
             </div>
 
-            <!-- Quiz Section -->
-            <div id="quizSection" class="hidden">
+            <!-- Quiz Section - HIDDEN -->
+            <div id="quizSection" class="hidden" style="display: none;">
                 <div class="student-info" id="studentInfo"></div>
                 <div id="quizContent"></div>
                 <div class="nav-buttons">
@@ -502,19 +503,19 @@
                 </div>
             </div>
 
-            <!-- Result Section -->
-            <div id="resultSection" class="hidden">
+            <!-- Result Section - HIDDEN -->
+            <div id="resultSection" class="hidden" style="display: none;">
                 <div class="result" id="resultContent"></div>
                 <div class="nav-buttons">
                     <button class="btn btn-primary" onclick="startNewSession()">🔄 Sesi Baru</button>
-                    <button class="btn btn-warning" onclick="showSection('menu')"> Menu Utama</button>
+                    <button class="btn btn-warning" onclick="showSection('menu')">🏠 Menu Utama</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Loading Overlay -->
-    <div id="loadingOverlay" class="loading-overlay hidden">
+    <!-- Loading Overlay - HIDDEN DENGAN INLINE STYLE -->
+    <div id="loadingOverlay" class="hidden" style="display: none;">
         <div class="loading-box">
             <div class="spinner"></div>
             <h3>Mengirim Jawaban...</h3>
@@ -532,152 +533,42 @@
         // BANK SOAL PILIHAN GANDA (20 SOAL)
         // ============================================
         const bankSoalPG = [
-            {
-                soal: "Apa arti dari kata تِلْفَازٌ?",
-                options: ["Meja tulis", "Televisi", "Sofa", "Jam"],
-                jawaban: 1
-            },
-            {
-                soal: "Kata أَرِيكَةٌ dalam bahasa Indonesia berarti...",
-                options: ["Karpet", "Vas bunga", "Sofa", "Dinding"],
-                jawaban: 2
-            },
-            {
-                soal: "Keterangan tempat أَمَامَ artinya...",
-                options: ["Di belakang", "Di samping", "Di depan", "Di atas"],
-                jawaban: 2
-            },
-            {
-                soal: "Kata وَرَاءَ memiliki arti...",
-                options: ["Di depan", "Di dalam", "Di antara", "Di belakang"],
-                jawaban: 3
-            },
-            {
-                soal: "جَانِبَ artinya...",
-                options: ["Di samping", "Di atas", "Di bawah", "Di dalam"],
-                jawaban: 0
-            },
-            {
-                soal: "Keterangan tempat yang berarti 'di antara' adalah...",
-                options: ["فِي", "عَلَى", "بَيْنَ", "أَمَامَ"],
-                jawaban: 2
-            },
-            {
-                soal: "Kata فِي artinya...",
-                options: ["Di atas", "Di dalam", "Di depan", "Di samping"],
-                jawaban: 1
-            },
-            {
-                soal: "عَلَى berarti...",
-                options: ["Di dalam", "Di belakang", "Di atas", "Di antara"],
-                jawaban: 2
-            },
-            {
-                soal: "Kalimat هَارُونٌ أَمَامَ الْأَبِ artinya...",
-                options: ["Harun di belakang ayah", "Harun di samping ayah", "Harun di depan ayah", "Harun di atas ayah"],
-                jawaban: 2
-            },
-            {
-                soal: "أُمِّي وَرَاءَ الْأُخْتِ artinya...",
-                options: ["Ibuku di depan saudara perempuan", "Ibuku di belakang saudara perempuan", "Ibuku di samping saudara perempuan", "Ibuku di antara saudara perempuan"],
-                jawaban: 1
-            },
-            {
-                soal: "التِّلْفَازُ عَلَى الْمَكْتَبِ artinya...",
-                options: ["TV di dalam meja", "TV di bawah meja", "TV di atas meja", "TV di samping meja"],
-                jawaban: 2
-            },
-            {
-                soal: "الزَّهْرِيَّةُ فِي الْغُرْفَةِ artinya...",
-                options: ["Vas bunga di atas ruangan", "Vas bunga di dalam ruangan", "Vas bunga di depan ruangan", "Vas bunga di belakang ruangan"],
-                jawaban: 1
-            },
-            {
-                soal: "الْأَخُ بَيْنَ الْأَبِ وَالْأُمِّ artinya...",
-                options: ["Saudara laki-laki di depan ayah dan ibu", "Saudara laki-laki di belakang ayah dan ibu", "Saudara laki-laki di antara ayah dan ibu", "Saudara laki-laki di samping ayah dan ibu"],
-                jawaban: 2
-            },
-            {
-                soal: "Kata مِفْرَشٌ artinya...",
-                options: ["Jam", "Karpet", "Meja", "Dinding"],
-                jawaban: 1
-            },
-            {
-                soal: "الْجِدَارُ وَرَاءَ الْأَرِيكَةِ artinya...",
-                options: ["Dinding di depan sofa", "Dinding di samping sofa", "Dinding di belakang sofa", "Dinding di atas sofa"],
-                jawaban: 2
-            },
-            {
-                soal: "Keterangan tempat yang selalu diikuti dua objek dengan huruf وَ adalah...",
-                options: ["أَمَامَ", "وَرَاءَ", "جَانِبَ", "بَيْنَ"],
-                jawaban: 3
-            },
-            {
-                soal: "سَاعَةٌ artinya...",
-                options: ["Vas bunga", "Jam", "Sofa", "Meja tulis"],
-                jawaban: 1
-            },
-            {
-                soal: "Kalimat yang benar untuk 'Ibu di samping ayah' adalah...",
-                options: ["الْأُمُّ أَمَامَ الْأَبِ", "الْأُمُّ وَرَاءَ الْأَبِ", "الْأُمُّ جَانِبَ الْأَبِ", "الْأُمُّ فِي الْأَبِ"],
-                jawaban: 2
-            },
-            {
-                soal: "Jika buku berada di dalam tas, kalimat Arabnya adalah...",
-                options: ["الْكِتَابُ عَلَى الْحَقِيبَةِ", "الْكِتَابُ فِي الْحَقِيبَةِ", "الْكِتَابُ أَمَامَ الْحَقِيبَةِ", "الْكِتَابُ وَرَاءَ الْحَقِيبَةِ"],
-                jawaban: 1
-            },
-            {
-                soal: "غُرْفَةُ الْعَائِلَةِ artinya...",
-                options: ["Ruang tamu", "Ruang keluarga", "Ruang tidur", "Ruang makan"],
-                jawaban: 1
-            }
+            { soal: "Apa arti dari kata تِلْفَازٌ?", options: ["Meja tulis", "Televisi", "Sofa", "Jam"], jawaban: 1 },
+            { soal: "Kata أَرِيكَةٌ dalam bahasa Indonesia berarti...", options: ["Karpet", "Vas bunga", "Sofa", "Dinding"], jawaban: 2 },
+            { soal: "Keterangan tempat أَمَامَ artinya...", options: ["Di belakang", "Di samping", "Di depan", "Di atas"], jawaban: 2 },
+            { soal: "Kata وَرَاءَ memiliki arti...", options: ["Di depan", "Di dalam", "Di antara", "Di belakang"], jawaban: 3 },
+            { soal: "جَانِبَ artinya...", options: ["Di samping", "Di atas", "Di bawah", "Di dalam"], jawaban: 0 },
+            { soal: "Keterangan tempat yang berarti 'di antara' adalah...", options: ["فِي", "عَلَى", "بَيْنَ", "أَمَامَ"], jawaban: 2 },
+            { soal: "Kata فِي artinya...", options: ["Di atas", "Di dalam", "Di depan", "Di samping"], jawaban: 1 },
+            { soal: "عَلَى berarti...", options: ["Di dalam", "Di belakang", "Di atas", "Di antara"], jawaban: 2 },
+            { soal: "Kalimat هَارُونٌ أَمَامَ الْأَبِ artinya...", options: ["Harun di belakang ayah", "Harun di samping ayah", "Harun di depan ayah", "Harun di atas ayah"], jawaban: 2 },
+            { soal: "أُمِّي وَرَاءَ الْأُخْتِ artinya...", options: ["Ibuku di depan saudara perempuan", "Ibuku di belakang saudara perempuan", "Ibuku di samping saudara perempuan", "Ibuku di antara saudara perempuan"], jawaban: 1 },
+            { soal: "التِّلْفَازُ عَلَى الْمَكْتَبِ artinya...", options: ["TV di dalam meja", "TV di bawah meja", "TV di atas meja", "TV di samping meja"], jawaban: 2 },
+            { soal: "الزَّهْرِيَّةُ فِي الْغُرْفَةِ artinya...", options: ["Vas bunga di atas ruangan", "Vas bunga di dalam ruangan", "Vas bunga di depan ruangan", "Vas bunga di belakang ruangan"], jawaban: 1 },
+            { soal: "الْأَخُ بَيْنَ الْأَبِ وَالْأُمِّ artinya...", options: ["Saudara laki-laki di depan ayah dan ibu", "Saudara laki-laki di belakang ayah dan ibu", "Saudara laki-laki di antara ayah dan ibu", "Saudara laki-laki di samping ayah dan ibu"], jawaban: 2 },
+            { soal: "Kata مِفْرَشٌ artinya...", options: ["Jam", "Karpet", "Meja", "Dinding"], jawaban: 1 },
+            { soal: "الْجِدَارُ وَرَاءَ الْأَرِيكَةِ artinya...", options: ["Dinding di depan sofa", "Dinding di samping sofa", "Dinding di belakang sofa", "Dinding di atas sofa"], jawaban: 2 },
+            { soal: "Keterangan tempat yang selalu diikuti dua objek dengan huruf وَ adalah...", options: ["أَمَامَ", "وَرَاءَ", "جَانِبَ", "بَيْنَ"], jawaban: 3 },
+            { soal: "سَاعَةٌ artinya...", options: ["Vas bunga", "Jam", "Sofa", "Meja tulis"], jawaban: 1 },
+            { soal: "Kalimat yang benar untuk 'Ibu di samping ayah' adalah...", options: ["الْأُمُّ أَمَامَ الْأَبِ", "الْأُمُّ وَرَاءَ الْأَبِ", "الْأُمُّ جَانِبَ الْأَبِ", "الْأُمُّ فِي الْأَبِ"], jawaban: 2 },
+            { soal: "Jika buku berada di dalam tas, kalimat Arabnya adalah...", options: ["الْكِتَابُ عَلَى الْحَقِيبَةِ", "الْكِتَابُ فِي الْحَقِيبَةِ", "الْكِتَابُ أَمَامَ الْحَقِيبَةِ", "الْكِتَابُ وَرَاءَ الْحَقِيبَةِ"], jawaban: 1 },
+            { soal: "غُرْفَةُ الْعَائِلَةِ artinya...", options: ["Ruang tamu", "Ruang keluarga", "Ruang tidur", "Ruang makan"], jawaban: 1 }
         ];
 
         // ============================================
         // BANK SOAL ESSAY (10 SOAL)
         // ============================================
         const bankSoalEssay = [
-            {
-                soal: "Sebutkan 6 ظَرْفُ الْمَكَانِ (keterangan tempat) yang telah dipelajari beserta artinya!",
-                jawaban: "أَمَامَ = Di depan, وَرَاءَ = Di belakang, جَانِبَ = Di samping, بَيْنَ = Di antara, فِي = Di dalam, عَلَى = Di atas"
-            },
-            {
-                soal: "Terjemahkan kalimat berikut ke dalam bahasa Indonesia: هَارُونٌ أَمَامَ التِّلْفَازِ",
-                jawaban: "Harun di depan TV"
-            },
-            {
-                soal: "Terjemahkan kalimat berikut ke dalam bahasa Indonesia: الْأَبُ جَانِبَ الْأُمِّ",
-                jawaban: "Ayah di samping ibu"
-            },
-            {
-                soal: "Buatlah kalimat bahasa Arab untuk menyatakan 'Vas bunga di atas meja'!",
-                jawaban: "الزَّهْرِيَّةُ عَلَى الْمَكْتَبِ"
-            },
-            {
-                soal: "Buatlah kalimat bahasa Arab untuk menyatakan 'Karpet di dalam ruangan'!",
-                jawaban: "الْمِفْرَشُ فِي الْغُرْفَةِ"
-            },
-            {
-                soal: "Jelaskan perbedaan penggunaan بَيْنَ dengan keterangan tempat lainnya!",
-                jawaban: "بَيْنَ selalu diikuti dua objek yang dihubungkan dengan huruf وَ (dan). Contoh: بَيْنَ الْأَبِ وَالْأُمِّ. Sedangkan keterangan tempat lain hanya membutuhkan satu objek."
-            },
-            {
-                soal: "Terjemahkan kalimat berikut ke dalam bahasa Arab: 'Dinding di belakang sofa'",
-                jawaban: "الْجِدَارُ وَرَاءَ الْأَرِيكَةِ"
-            },
-            {
-                soal: "Terjemahkan kalimat berikut ke dalam bahasa Arab: 'Saudara laki-laki di antara ayah dan ibu'",
-                jawaban: "الْأَخُ بَيْنَ الْأَبِ وَالْأُمِّ"
-            },
-            {
-                soal: "Sebutkan 5 kosakata benda-benda yang ada di ruang keluarga dalam bahasa Arab beserta artinya!",
-                jawaban: "تِلْفَازٌ = Televisi, أَرِيكَةٌ = Sofa, مَكْتَبٌ = Meja tulis, سَاعَةٌ = Jam, مِفْرَشٌ = Karpet"
-            },
-            {
-                soal: "Buatlah 3 kalimat sederhana menggunakan ظَرْفُ الْمَكَانِ yang berbeda-beda, lalu terjemahkan ke dalam bahasa Indonesia!",
-                jawaban: "Contoh: التِّلْفَازُ عَلَى الْمَكْتَبِ (TV di atas meja), الْأُمُّ فِي الْغُرْفَةِ (Ibu di dalam ruangan), هَارُونٌ أَمَامَ الْأَبِ (Harun di depan ayah)"
-            }
+            { soal: "Sebutkan 6 ظَرْفُ الْمَكَانِ (keterangan tempat) yang telah dipelajari beserta artinya!", jawaban: "أَمَامَ = Di depan, وَرَاءَ = Di belakang, جَانِبَ = Di samping, بَيْنَ = Di antara, فِي = Di dalam, عَلَى = Di atas" },
+            { soal: "Terjemahkan kalimat berikut ke dalam bahasa Indonesia: هَارُونٌ أَمَامَ التِّلْفَازِ", jawaban: "Harun di depan TV" },
+            { soal: "Terjemahkan kalimat berikut ke dalam bahasa Indonesia: الْأَبُ جَانِبَ الْأُمِّ", jawaban: "Ayah di samping ibu" },
+            { soal: "Buatlah kalimat bahasa Arab untuk menyatakan 'Vas bunga di atas meja'!", jawaban: "الزَّهْرِيَّةُ عَلَى الْمَكْتَبِ" },
+            { soal: "Buatlah kalimat bahasa Arab untuk menyatakan 'Karpet di dalam ruangan'!", jawaban: "الْمِفْرَشُ فِي الْغُرْفَةِ" },
+            { soal: "Jelaskan perbedaan penggunaan بَيْنَ dengan keterangan tempat lainnya!", jawaban: "بَيْنَ selalu diikuti dua objek yang dihubungkan dengan huruf وَ (dan). Contoh: بَيْنَ الْأَبِ وَالْأُمِّ. Sedangkan keterangan tempat lain hanya membutuhkan satu objek." },
+            { soal: "Terjemahkan kalimat berikut ke dalam bahasa Arab: 'Dinding di belakang sofa'", jawaban: "الْجِدَارُ وَرَاءَ الْأَرِيكَةِ" },
+            { soal: "Terjemahkan kalimat berikut ke dalam bahasa Arab: 'Saudara laki-laki di antara ayah dan ibu'", jawaban: "الْأَخُ بَيْنَ الْأَبِ وَالْأُمِّ" },
+            { soal: "Sebutkan 5 kosakata benda-benda yang ada di ruang keluarga dalam bahasa Arab beserta artinya!", jawaban: "تِلْفَازٌ = Televisi, أَرِيكَةٌ = Sofa, مَكْتَبٌ = Meja tulis, سَاعَةٌ = Jam, مِفْرَشٌ = Karpet" },
+            { soal: "Buatlah 3 kalimat sederhana menggunakan ظَرْفُ الْمَكَانِ yang berbeda-beda, lalu terjemahkan ke dalam bahasa Indonesia!", jawaban: "Contoh: التِّلْفَازُ عَلَى الْمَكْتَبِ (TV di atas meja), الْأُمُّ فِي الْغُرْفَةِ (Ibu di dalam ruangan), هَارُونٌ أَمَامَ الْأَبِ (Harun di depan ayah)" }
         ];
 
         // ============================================
@@ -694,22 +585,42 @@
         };
 
         // ============================================
+        // INISIALISASI SAAT HALAMAN DIMUAT
+        // ============================================
+        window.addEventListener('DOMContentLoaded', function() {
+            // Pastikan hanya mainMenu yang terlihat
+            document.getElementById('mainMenu').style.display = 'block';
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('materiSection').style.display = 'none';
+            document.getElementById('quizSection').style.display = 'none';
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('loadingOverlay').style.display = 'none';
+            
+            console.log('✅ Halaman berhasil dimuat. Menu utama ditampilkan.');
+        });
+
+        // ============================================
         // FUNGSI NAVIGASI
         // ============================================
         function showSection(section) {
-            document.getElementById('mainMenu').classList.add('hidden');
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('materiSection').classList.add('hidden');
-            document.getElementById('quizSection').classList.add('hidden');
-            document.getElementById('resultSection').classList.add('hidden');
+            // Sembunyikan SEMUA section dulu
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('materiSection').style.display = 'none';
+            document.getElementById('quizSection').style.display = 'none';
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('loadingOverlay').style.display = 'none';
 
+            // Tampilkan section yang diminta
             if (section === 'menu') {
-                document.getElementById('mainMenu').classList.remove('hidden');
+                document.getElementById('mainMenu').style.display = 'block';
             } else if (section === 'login') {
-                document.getElementById('loginSection').classList.remove('hidden');
+                document.getElementById('loginSection').style.display = 'block';
             } else if (section === 'materi') {
-                document.getElementById('materiSection').classList.remove('hidden');
+                document.getElementById('materiSection').style.display = 'block';
             }
+            
+            window.scrollTo(0, 0);
         }
 
         function shuffleArray(array) {
@@ -740,18 +651,15 @@
             currentSession.name = name;
             currentSession.class = kelas;
 
-            // Pilih 7 soal PG acak dari 20
             const shuffledPG = shuffleArray(bankSoalPG);
             currentSession.soalPG = shuffledPG.slice(0, 7);
 
-            // Pilih 3 soal essay acak dari 10
             const shuffledEssay = shuffleArray(bankSoalEssay);
             currentSession.soalEssay = shuffledEssay.slice(0, 3);
 
             currentSession.jawabanPG = new Array(7).fill(null);
             currentSession.jawabanEssay = new Array(3).fill('');
 
-            // Tampilkan info siswa
             document.getElementById('studentInfo').innerHTML = `
                 <strong>👤 Nama:</strong> ${currentSession.name} | 
                 <strong> Kelas:</strong> ${currentSession.class} |
@@ -759,16 +667,12 @@
             `;
 
             renderQuiz();
-
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('quizSection').classList.remove('hidden');
-            window.scrollTo(0, 0);
+            showSection('quiz');
         }
 
         function renderQuiz() {
             let html = '<h2 style="color: #667eea; margin-bottom: 20px;">📝 Soal Latihan</h2>';
 
-            // Soal Pilihan Ganda
             html += '<div class="section"><h3>A. Pilihan Ganda (7 Soal)</h3><p style="margin-bottom:15px;color:#666;">Pilihlah satu jawaban yang paling benar!</p>';
             currentSession.soalPG.forEach((soal, index) => {
                 html += `
@@ -788,7 +692,6 @@
             });
             html += '</div>';
 
-            // Soal Essay
             html += '<div class="section"><h3>B. Essay (3 Soal)</h3><p style="margin-bottom:15px;color:#666;">Jawablah pertanyaan berikut dengan jelas! (Akan dinilai oleh guru)</p>';
             currentSession.soalEssay.forEach((soal, index) => {
                 html += `
@@ -796,7 +699,6 @@
                         <h4>${index + 1}. ${soal.soal}</h4>
                         <div class="form-group">
                             <textarea id="essay${index}" rows="4" placeholder="Tulis jawaban Anda di sini..."
-                                onchange="currentSession.jawabanEssay[${index}] = this.value"
                                 oninput="currentSession.jawabanEssay[${index}] = this.value"></textarea>
                         </div>
                     </div>
@@ -807,6 +709,31 @@
             document.getElementById('quizContent').innerHTML = html;
         }
 
+        // Tambahkan section quiz ke fungsi showSection
+        const originalShowSection = showSection;
+        showSection = function(section) {
+            document.getElementById('mainMenu').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('materiSection').style.display = 'none';
+            document.getElementById('quizSection').style.display = 'none';
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('loadingOverlay').style.display = 'none';
+
+            if (section === 'menu') {
+                document.getElementById('mainMenu').style.display = 'block';
+            } else if (section === 'login') {
+                document.getElementById('loginSection').style.display = 'block';
+            } else if (section === 'materi') {
+                document.getElementById('materiSection').style.display = 'block';
+            } else if (section === 'quiz') {
+                document.getElementById('quizSection').style.display = 'block';
+            } else if (section === 'result') {
+                document.getElementById('resultSection').style.display = 'block';
+            }
+            
+            window.scrollTo(0, 0);
+        };
+
         // ============================================
         // KIRIM DATA KE GOOGLE SPREADSHEET
         // ============================================
@@ -815,9 +742,7 @@
                 await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
                 return { status: 'success', message: 'Data berhasil dikirim!' };
@@ -831,18 +756,16 @@
         // SUBMIT KUIS
         // ============================================
         async function submitQuiz() {
-            // Validasi jawaban PG
             const unansweredPG = currentSession.jawabanPG.filter(j => j === null).length;
             if (unansweredPG > 0) {
-                if (!confirm(`️ Masih ada ${unansweredPG} soal pilihan ganda yang belum dijawab. Yakin ingin mengumpulkan?`)) {
+                if (!confirm(`⚠️ Masih ada ${unansweredPG} soal pilihan ganda yang belum dijawab. Yakin ingin mengumpulkan?`)) {
                     return;
                 }
             }
 
-            // Validasi jawaban essay
             const unansweredEssay = currentSession.jawabanEssay.filter(j => j.trim() === '').length;
             if (unansweredEssay > 0) {
-                if (!confirm(`️ Masih ada ${unansweredEssay} soal essay yang belum dijawab. Yakin ingin mengumpulkan?`)) {
+                if (!confirm(`⚠️ Masih ada ${unansweredEssay} soal essay yang belum dijawab. Yakin ingin mengumpulkan?`)) {
                     return;
                 }
             }
@@ -851,7 +774,6 @@
                 return;
             }
 
-            // Hitung skor PG
             let skorPG = 0;
             currentSession.soalPG.forEach((soal, index) => {
                 if (currentSession.jawabanPG[index] === soal.jawaban) {
@@ -860,13 +782,10 @@
             });
 
             const skorPGFinal = (skorPG / 7) * 70;
-
-            // Format jawaban PG menjadi huruf A/B/C/D
             const jawabanPGFormatted = currentSession.jawabanPG.map(j => 
                 j !== null ? String.fromCharCode(65 + j) : '-'
             );
 
-            // Persiapkan data untuk dikirim
             const dataToSend = {
                 nama: currentSession.name,
                 kelas: currentSession.class,
@@ -877,18 +796,16 @@
                 jawabanEssay: currentSession.jawabanEssay.map(j => j.trim() || '-')
             };
 
-            // Tampilkan loading
-            document.getElementById('loadingOverlay').classList.remove('hidden');
+            // Tampilkan loading - SEKARANG DI SINI SAJA
+            document.getElementById('loadingOverlay').style.display = 'flex';
             document.getElementById('submitBtn').disabled = true;
 
-            // Kirim data
             const result = await sendDataToSpreadsheet(dataToSend);
 
             // Sembunyikan loading
-            document.getElementById('loadingOverlay').classList.add('hidden');
+            document.getElementById('loadingOverlay').style.display = 'none';
             document.getElementById('submitBtn').disabled = false;
 
-            // Tampilkan hasil - HANYA NILAI PG
             let resultHTML = `
                 <h2>🎉 Hasil Latihan</h2>
                 <p><strong>👤 Nama:</strong> ${currentSession.name}</p>
@@ -903,7 +820,7 @@
             if (result.status === 'success') {
                 resultHTML += `<p><span class="status-badge status-success">✅ Data berhasil dikirim ke guru!</span></p>`;
             } else {
-                resultHTML += `<p><span class="status-badge status-error">⚠️ Gagal mengirim data - Screenshot hasil ini!</span></p>`;
+                resultHTML += `<p><span class="status-badge status-error">️ Gagal mengirim data - Screenshot hasil ini!</span></p>`;
             }
 
             resultHTML += `
@@ -913,7 +830,6 @@
                 </div>
             `;
 
-            // Tampilkan review jawaban PG (HANYA PG)
             resultHTML += '<div class="answer-review">';
             resultHTML += '<h3 style="color: #667eea; margin-bottom: 15px;">📋 Review Jawaban Pilihan Ganda:</h3>';
             
@@ -937,11 +853,8 @@
             resultHTML += '</div>';
 
             document.getElementById('resultContent').innerHTML = resultHTML;
-            document.getElementById('quizSection').classList.add('hidden');
-            document.getElementById('resultSection').classList.remove('hidden');
-            window.scrollTo(0, 0);
+            showSection('result');
 
-            // Tambah sesi untuk percobaan berikutnya
             currentSession.sessionNumber++;
         }
 
